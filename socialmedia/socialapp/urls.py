@@ -6,6 +6,8 @@ urlpatterns = [
     url(r'^allusers/$', views.allusers),
     url(r'(?P<usr_id>[0-9]+)/block',views.block),
     url(r'(?P<usr_id>[0-9]+)/unblock', views.unblock),
+    url(r'(?P<usr_id>[0-9]+)/promote', views.promote),
+    url(r'(?P<usr_id>[0-9]+)/update', views.update),
 
     # url(r'^(?P<st_id>[0-9]+$)',views.getstudent),
     # url('^new',views.newStudent),
