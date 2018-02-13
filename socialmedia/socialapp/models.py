@@ -14,11 +14,13 @@ class Posts(models.Model):
     title = models.CharField(max_length = 50)
     tag = models.CharField(max_length = 50)
     cat_name = models.ForeignKey(Category)
+    created = models.DateTimeField(auto_now_add=True)
 
 class Comment(models.Model):
     c_body = models.CharField(max_length = 255)
     c_user = models.ForeignKey(User)
     id_post = models.ForeignKey(Posts)
+    created = models.DateTimeField(auto_now_add=True)
 
 class Reply(models.Model):
     R_body = models.CharField(max_length = 255)

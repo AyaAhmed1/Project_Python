@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+
+
+	<td><a href="/opensource/new">add new student</a></td>
+	<table>
+	<th>Full name</th>
+	<th>email</th>
+	<!-- <th>track</th> -->
+	{% for usr in allusers %}
+	<tr>
+	<td>{{usr.username}}</td>
+	<td>{{usr.email}}</td>
+	<!-- <td>{{usr.student_track}}</td>
+	<td><a href="/opensource/{{st.id}}">show more</a></td>
+
+	<td><a href="/opensource/{{st.id}}/update">update</a></td>
+	<td><a href="/opensource/{{st.id}}/delete">delete</a></td> -->
+	{% if usr.is_superuser == 0 %}
+	{% if usr.is_active == 1 %}
+	<td><a href="/socialapp/{{usr.id}}/block">block</a></td>
+	{% endif %}
+	{% if usr.is_active == 0 %}
+	<td><a href="/socialapp/{{usr.id}}/unblock">unblock</a></td>
+	{% endif %}
+
+	<td><a href="/socialapp/{{usr.id}}/promote">promote</a></td>
+    <td><a href="/socialapp/{{usr.id}}/update">update</a></td>
+
+
+	{% endif %}
+
+    </tr>
+
+	{% endfor%}
+
+    </table>
+    
+
+
+
+
+</body>
+</html>
