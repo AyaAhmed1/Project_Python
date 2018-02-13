@@ -20,6 +20,40 @@ class Posts(models.Model):
     tag = models.CharField(max_length = 50)
     cat_name = models.ForeignKey(Category)
 
+class Comment(models.Model):
+    c_body = models.CharField(max_length = 255)
+    c_user = models.ForeignKey(Users)
+    id_post = models.ForeignKey(Posts)
+
+class Reply(models.Model):
+    R_body = models.CharField(max_length = 255)
+    R_user = models.ForeignKey(Users)
+    post_id = models.ForeignKey(Comment)
+
+class CateUsr(models.Model):
+    user = models.ForeignKey(Users)
+    categ = models.ForeignKey(Category)
+
+class Unwanted(models.Model):
+    word = models.CharField(max_length = 50)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
