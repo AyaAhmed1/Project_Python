@@ -1,7 +1,6 @@
 from django.contrib import admin
-from .models import Users,Category,Posts ,Comment , Reply, CateUsr,Unwanted
+from .models import User,Category,Posts ,Comment , Reply, CateUsr,Unwanted
 
-admin.site.register(Users)
 
 admin.site.register(Posts)
 
