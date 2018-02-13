@@ -1,16 +1,7 @@
 from django.db import models
 
-class Users(models.Model):
-    username = models.CharField(max_length = 50)
-    password = models.IntegerField()
-    email = models.CharField(max_length = 50)
-    is_admin = models.IntegerField()
-    is_blocked = models.IntegerField()
-
 class Category(models.Model):
     category_name = models.CharField(max_length = 50)
-    def __str__(self):
-     return self.category_name
 
 
 class Posts(models.Model):
@@ -24,16 +15,16 @@ class Posts(models.Model):
 
 class Comment(models.Model):
     c_body = models.CharField(max_length = 255)
-    c_user = models.ForeignKey(Users)
+    c_user = models.ForeignKey(User)
     id_post = models.ForeignKey(Posts)
 
 class Reply(models.Model):
     R_body = models.CharField(max_length = 255)
-    R_user = models.ForeignKey(Users)
+    R_user = models.ForeignKey(User)
     post_id = models.ForeignKey(Comment)
 
 class CateUsr(models.Model):
-    user = models.ForeignKey(Users)
+    user = models.ForeignKey(User)
     categ = models.ForeignKey(Category)
 
 class Unwanted(models.Model):
