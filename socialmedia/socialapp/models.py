@@ -11,7 +11,7 @@ class Posts(models.Model):
     dislike = models.IntegerField()
     title = models.CharField(max_length = 50)
     tag = models.CharField(max_length = 50)
-    cat_name = models.ForeignKey(Category)
+    cat_name= models.ForeignKey(Category)
 
 class Comment(models.Model):
     c_body = models.CharField(max_length = 255)
