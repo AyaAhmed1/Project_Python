@@ -9,6 +9,8 @@ class Users(models.Model):
 
 class Category(models.Model):
     category_name = models.CharField(max_length = 50)
+    def __str__(self):
+     return self.category_name
 
 
 class Posts(models.Model):
@@ -36,25 +38,3 @@ class CateUsr(models.Model):
 
 class Unwanted(models.Model):
     word = models.CharField(max_length = 50)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

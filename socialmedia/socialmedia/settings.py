@@ -56,7 +56,7 @@ ROOT_URLCONF = 'socialmedia.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': os.path.join(BASE_DIR,"socialapp/templates/admin"),
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -80,8 +80,9 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'socialMedia',
         'USER': 'root',
-        'PASSWORD':'4448714',
+        'PASSWORD':'1234',
         
+
 
     }
 }
