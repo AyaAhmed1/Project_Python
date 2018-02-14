@@ -5,6 +5,8 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="stylesheet" href="bootstrap.min.css">
+    {% load static %}
+        <link rel="stylesheet" href="{%static 'bootstrap.min.css' %}">
     <style>
       .border{
       border:1px solid black;
@@ -14,7 +16,7 @@
   </head>
 <body>
   <br/>
-<div align="center" class="row">
+<div class="row">
 {% load static %}
   {%  for posts in all_category_posts %}
   <div class="border col-8 ">
@@ -31,6 +33,6 @@
   {% endfor %}
 
   </body>
-<script src="jquery.min.js"></script>
-<script src="bootstrap.bundle.min.js"></script>
+  <script src="{% static 'jquery.min.js' %}"></script>
+  <script src="{% static 'bootstrap.bundle.min.js' %}"></script>
 </html>
