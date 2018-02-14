@@ -17,3 +17,9 @@ def Category_posts(request,cat_id):
     cat_name=Category.objects.get(id=cat_id)
     context={"all_category_posts" :all_Category_posts,"cat_name": cat_name}
     return render (request,"pages/cat_posts.html",context)
+
+def Post_Page(request,post_id):
+    post=Posts.objects.filter(id=post_id)
+    all_categories =Category.objects.all()
+    context={"post_data" : post, "all_categories" :all_categories}
+    return render (request,"pages/post_page.html",context)
