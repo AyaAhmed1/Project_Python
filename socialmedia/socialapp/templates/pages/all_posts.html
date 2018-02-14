@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+
+<div>
+	<a href="/socialapp/newpost">add new Post</a>
+{% for pst in allposts %}
+<div style="border:1px solid black">
+
+img:{{pst.img}}
+<h3>title : {{pst.title}}</h3>
+<p>post : {{pst.p_body}}</p>
+<h5>category : {{pst.cat_name}}</h5>
+<a href="/socialapp/{{pst.id}}/deletepst">delete</a>
+<a href="/socialapp/{{pst.id}}/pstupdate">update</a>
+
+
+
+</div>
+
+
+
+
+
+{% endfor %}
+
+
+</div>
+
+
+
+</body>
+</html>
+
+    
