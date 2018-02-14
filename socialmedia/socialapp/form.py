@@ -14,7 +14,7 @@ class Userform(forms.ModelForm):
 class Postform(forms.ModelForm):
     class Meta:
         model = Posts
-        fields=('imag','title','p_body','tag','cat_name')
+        fields=('img','title','p_body','tag','cat_name')
 
 
 class Catform(forms.ModelForm):

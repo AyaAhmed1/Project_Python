@@ -10,7 +10,7 @@ class Category(models.Model):
 
 class Posts(models.Model):
     # img = models.ImageField(blank=True,default='1.jpeg')
-    imag = models.ImageField(blank=True,default='1.jpeg')
+    img = models.ImageField(blank=True,default='1.jpeg')
     p_body = models.CharField(max_length = 255,default='')
     like = models.IntegerField(default=0)
     dislike = models.IntegerField(default=0)

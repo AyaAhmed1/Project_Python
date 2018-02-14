@@ -1,10 +1,57 @@
+{% load static %}
 <!DOCTYPE html>
 <html>
 <head>
 	<title></title>
+	<link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap.min.css' %}">
+ 	<link rel="stylesheet" type="text/css" href="{% static 'css/font-awesome.min.css' %}">
 </head>
-<body>
-	<div>hello yiu are in dash board page</div>
+<body style="background-color: black">
 
+<!--  start navbar -->
+
+	<nav class="navbar navbar-expand-md navbar-dark bg-dark">
+<!--   <a class="navbar-brand" href="#">Logo</a>-->
+	  <img src="iti.png"  />
+
+   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" >
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarNav">
+    <ul class="navbar-nav">
+      <li class="nav-item active">
+        <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#">Track</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#">about</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#">Contact</a>
+      </li>
+     
+	</ul>
+  </div>
+</nav>
+<!-- end navbar -->
+<div class="container">
+	<!-- <a href="/socialapp/{{usr_id}}" -->
+		    <div class="row text-center">
+			<a href="/socialapp/allusers" class="col-sm-12 col-md-6 col-lg-3"><button class="btn btn-danger" style="width: 200px;height: 200px ;margin: 20px" ><h3>USERS</h3></button></a>
+		    <a href="/socialapp/allposts" class="col-sm-12 col-md-6 col-lg-3"><button class="btn btn-warning" style="width: 200px;height: 200px;margin: 20px"><h3>POSTS</h3></button></a>
+			<a href="/socialapp/allcat" class="col-sm-12 col-md-6 col-lg-3"><button class="btn btn-success" style="width: 200px;height: 200px;margin: 20px"><h4>CATEGORIES</h4></button></a>
+			<a href="/socialapp/allwords" class="col-sm-12 col-md-6 col-lg-3"><button class="btn btn-info" style="width: 200px;height: 200px;margin: 20px"><h3>WORDS</h3></button></a>
+            </div>
+            <div class ="text-center">
+            <a href="/socialapp/dashboard"><button class="btn btn-info" style="width: 400px ;margin:30px ">back</button></a></a>
+           </div>
+
+
+
+</div>
+<script type="text/javascript" src="{% static 'js/jquery.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
 </body>
 </html>
