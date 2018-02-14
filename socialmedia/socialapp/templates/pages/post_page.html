@@ -6,8 +6,6 @@
 
     <meta name="viewport" content="width=device-width, initial-scale=1">
       <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-
-
     <style>
       .border{
       border:1px solid black;
@@ -58,7 +56,7 @@
      </button>
         <label>{{post.like}} </label>
         <button type="button" class="btn btn-default btn-sm">
-         <span class="glyphicon glyphicon-thumbs-down"></span> Like
+         <span class="glyphicon glyphicon-thumbs-down"></span> Unlike
        </button>
       <label>{{post.dislike}} </label>
       <div align="right">
@@ -69,11 +67,6 @@
     <div >Comments </div>
 </div>
  {% endfor %}
-
-
-
-
-
 
     </body>
     <script src="{% static 'jquery.min.js' %}"></script>
