@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 from django.http import HttpResponseRedirect
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 # Create your views here.
 from .models import Category,Posts
 
@@ -23,3 +24,17 @@ def Post_Page(request,post_id):
     all_categories =Category.objects.all()
     context={"post_data" : post, "all_categories" :all_categories}
     return render (request,"pages/post_page.html",context)
+
+
+def trial(request):
+    user_list = Posts.objects.order_by('time')
+    page = request.GET.get('page', 1)
+    paginator = Paginator(user_list, 2)
+    try:
+        users = paginator.page(page)
+    except PageNotAnInteger:
+        users = paginator.page(1)
+    except EmptyPage:
+        users = paginator.page(paginator.num_pages)
+
+    return render(request, "pages/try.html", { 'users': users })
