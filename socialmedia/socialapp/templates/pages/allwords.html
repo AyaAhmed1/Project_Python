@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<style>
+table, th, td {
+    border: 1px solid black;
+}
+</style>
+</head>
+<body>
+
+
+     <a href="/socialapp/newword">add new unwanted word</a>
+
+	<table>
+	<th>word</th>
+	<th colspan="2">action</th>
+	<!-- <th>track</th> -->
+	{% for wrd in allwords %}
+	<tr>
+	<td>{{wrd.word}}</td>
+	
+	
+	<td><a href="/socialapp/{{wrd.id}}/worddelete">delete</a></td>
+
+	<td><a href="/socialapp/{{wrd.id}}/wordupdate">update</a></td>
+
+
+
+	
+
+    </tr>
+
+	{% endfor%}
+
+    </table>
+
+</div>

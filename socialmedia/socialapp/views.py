@@ -2,8 +2,16 @@ from django.shortcuts import render
 from django.http import HttpResponse , HttpResponseRedirect
 from django.contrib.auth.models import User
 from models import Posts
+from models import Category
+from models import Unwanted
+
+
 from form import Userform
 from form import Postform
+from form import Catform
+from form import Wordform
+
+
 
 
 def dashboard(request):
@@ -75,3 +83,73 @@ def newPost(request):
             return HttpResponseRedirect('/socialapp/allposts')
     context = {"form" : Post_form}
     return render (request ,'pages/newpost.html',context)
+
+
+# category part
+
+def allcat(request):
+    all_cats = Category.objects.order_by('-id')
+    context = {'allcats': all_cats}
+    return render(request, 'pages/allcat.html', context)
+
+def newcat (request):
+    cat_form = Catform()
+    if request.method == "POST":
+        cat_form = Catform(request.POST)
+        if cat_form.is_valid():
+            cat_form.save()
+            return HttpResponseRedirect('/socialapp/allcat')
+    context = {"form": cat_form}
+    return render(request, 'pages/newcat.html', context)
+
+def catupdate (request,cat_id):
+    cat=Category.objects.get(id=cat_id)
+    cat_form=Catform(instance=cat)
+    if request.method=="POST":
+        cat_form = Catform(request.POST,instance=cat)
+        if cat_form.is_valid():
+            cat_form.save()
+            return HttpResponseRedirect("/socialapp/allcat")
+    context = {"form": cat_form}
+    return render(request, 'pages/updatecat.html', context)
+
+def catdelete (request,cat_id):
+    cat = Category.objects.get(id=cat_id)
+    cat.delete()
+    return HttpResponseRedirect("/socialapp/allcat")
+
+
+#unwanted word
+
+def allwords(request):
+    words = Unwanted.objects.order_by('-id')
+    context = {'allwords': words}
+    return render(request, 'pages/allwords.html', context)
+
+def newword (request):
+    word_form = Wordform()
+    if request.method == "POST":
+        word_form = Wordform(request.POST)
+        if word_form.is_valid():
+            word_form.save()
+            return HttpResponseRedirect('/socialapp/allwords')
+    context = {"form": word_form}
+    return render(request, 'pages/newword.html', context)
+
+def wordupate(request,wrd_id):
+    wrd=Unwanted.objects.get(id=wrd_id)
+    word_form=Wordform(instance=wrd)
+    if request.method == "POST":
+        word_form = Wordform(request.POST,instance=wrd)
+        if word_form.is_valid():
+            word_form.save()
+            return HttpResponseRedirect("/socialapp/allwords")
+    context = {"form": word_form}
+    return render(request, 'pages/updatewrd.html', context)
+
+
+
+def worddelete(request,wrd_id):
+    wrd=Unwanted.objects.get(id=wrd_id)
+    wrd.delete()
+    return HttpResponseRedirect("/socialapp/allwords")

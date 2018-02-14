@@ -14,9 +14,14 @@ urlpatterns = [
     url(r'(?P<pst_id>[0-9]+)/deletepst', views.deletepst),
     url(r'(?P<pst_id>[0-9]+)/pstupdate', views.updatepst),
 
-    # url(r'^(?P<st_id>[0-9]+$)',views.getstudent),
-    # url('^new',views.newStudent),
-    # url(r'(?P<st_id>[0-9]+)/update',views.update),
-    # url(r'(?P<st_id>[0-9]+)/delete',views.delete)
+    url(r'^allcat/$', views.allcat),
+    url(r'^newcat/$', views.newcat),
+    url(r'(?P<cat_id>[0-9]+)/catupdate', views.catupdate),
+    url(r'(?P<cat_id>[0-9]+)/catdelete', views.catdelete),
+
+    url(r'^allwords/$', views.allwords),
+    url(r'^newword/$', views.newword),
+    url(r'(?P<wrd_id>[0-9]+)/wordupdate', views.wordupate),
+    url(r'(?P<wrd_id>[0-9]+)/worddelete', views.worddelete),
 
 ]
