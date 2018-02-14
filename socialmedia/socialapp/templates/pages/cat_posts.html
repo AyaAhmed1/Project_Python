@@ -1,0 +1,36 @@
+<!doctype html>
+<html >
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="bootstrap.min.css">
+    <style>
+      .border{
+      border:1px solid black;
+      width:60%
+    }
+    </style>
+  </head>
+<body>
+  <br/>
+<div align="center" class="row">
+
+{% load static %}
+  {%  for posts in all_category_posts %}
+  <div class="border col-8 ">
+
+  <h2> {{posts.title }} </h2>
+  <img width="350" height="350" src="{%static  posts.img %}" >
+  <br/>
+  <p> {{posts.p_body}} </p>
+  <span> tags: {{posts.tag}} </span>
+<br/>
+  <span> Category:{{cat_name.category_name}} </span>
+  </div>
+  {% endfor %}
+
+  </body>
+<script src="jquery.min.js"></script>
+<script src="bootstrap.bundle.min.js"></script>
+</html>
