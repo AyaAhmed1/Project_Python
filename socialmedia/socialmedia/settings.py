@@ -26,7 +26,7 @@ SECRET_KEY = 'tv7kwosjqi)7zqhc60!800tbfq+zv!+*&hicc3nx(trxvs7dsl'
 DEBUG = True
 
 ALLOWED_HOSTS = []
-
+STATIC_URL = '/static/'
 
 # Application definition
 
@@ -38,6 +38,15 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+)
+STATICFILES_DIRS = (
+    os.path.join(BASE_DIR, "static"),
+    '/var/www/static/',
+)
+STATICFILES_FINDERS = (
+    'django.contrib.staticfiles.finders.FileSystemFinder',
+    'django.contrib.staticfiles.finders.AppDirectoriesFinder',
+    # django.contrib.staticfiles.finders.DefaultStorageFinder',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -52,6 +61,10 @@ MIDDLEWARE_CLASSES = (
 )
 
 ROOT_URLCONF = 'socialmedia.urls'
+STATICFILES_DIRS = (
+    os.path.join(BASE_DIR, "static"),
+    '/var/www/static/',
+)
 
 TEMPLATES = [
     {
@@ -81,7 +94,7 @@ DATABASES = {
         'NAME': 'socialMedia',
         'USER': 'root',
         'PASSWORD':'1234',
-        
+
 
 
     }
@@ -106,4 +119,3 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.8/howto/static-files/
 
 STATIC_URL = '/static/'
-

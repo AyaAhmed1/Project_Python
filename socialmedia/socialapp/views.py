@@ -7,7 +7,8 @@ from .models import Category,Posts
 
 def allCategories(request):
     all_categories =Category.objects.all()
-    context= {"all_categories":all_categories}
+    top_posts=Posts.objects.all()
+    context= {"all_categories":all_categories,"all_posts":top_posts}
     return render(request, "pages/all_cat.html" , context)
 
 
