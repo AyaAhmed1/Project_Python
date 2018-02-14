@@ -1,6 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
-
+from django.utils import timezone
 
 class Category(models.Model):
     category_name = models.CharField(max_length = 50)
@@ -11,9 +11,10 @@ class Posts(models.Model):
     p_body = models.CharField(max_length = 255)
     like = models.IntegerField()
     dislike = models.IntegerField()
-    title = models.CharField(max_length = 50)
+    title = models.CharField(max_length = 255)
     tag = models.CharField(max_length = 50)
     cat_name= models.ForeignKey(Category)
+    time= models.DateTimeField()
 
 class Comment(models.Model):
     c_body = models.CharField(max_length = 255)

@@ -7,7 +7,7 @@ from .models import Category,Posts
 
 def allCategories(request):
     all_categories =Category.objects.all()
-    top_posts=Posts.objects.all()
+    top_posts=Posts.objects.order_by('time')
     context= {"all_categories":all_categories,"all_posts":top_posts}
     return render(request, "pages/all_cat.html" , context)
 
