@@ -7,23 +7,23 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('socialapp', '0012_auto_20180214_0229'),
+        ('socialapp', '0002_posts_time'),
     ]
 
     operations = [
         migrations.AlterField(
             model_name='posts',
-            name='dislike',
-            field=models.IntegerField(default=1),
+            name='p_body',
+            field=models.TextField(),
         ),
         migrations.AlterField(
             model_name='posts',
-            name='like',
-            field=models.IntegerField(default=1),
+            name='tag',
+            field=models.CharField(max_length=255),
         ),
         migrations.AlterField(
-            model_name='reply',
-            name='post_id',
-            field=models.ForeignKey(to='socialapp.Comment'),
+            model_name='posts',
+            name='title',
+            field=models.CharField(max_length=255),
         ),
     ]

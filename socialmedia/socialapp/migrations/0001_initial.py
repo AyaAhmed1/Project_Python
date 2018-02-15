@@ -2,11 +2,13 @@
 from __future__ import unicode_literals
 
 from django.db import migrations, models
+from django.conf import settings
 
 
 class Migration(migrations.Migration):
 
     dependencies = [
+        migrations.swappable_dependency(settings.AUTH_USER_MODEL),
     ]
 
     operations = [
@@ -18,27 +20,53 @@ class Migration(migrations.Migration):
             ],
         ),
         migrations.CreateModel(
+            name='CateUsr',
+            fields=[
+                ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
+                ('categ', models.ForeignKey(to='socialapp.Category')),
+                ('user', models.ForeignKey(to=settings.AUTH_USER_MODEL)),
+            ],
+        ),
+        migrations.CreateModel(
+            name='Comment',
+            fields=[
+                ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
+                ('c_body', models.CharField(max_length=255)),
+                ('c_user', models.ForeignKey(to=settings.AUTH_USER_MODEL)),
+            ],
+        ),
+        migrations.CreateModel(
             name='Posts',
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
-                ('img', models.CharField(max_length=255)),
+                ('img', models.ImageField(default=b'1.jpeg', upload_to=b'', blank=True)),
                 ('p_body', models.CharField(max_length=255)),
-                ('like', models.IntegerField()),
-                ('dislike', models.IntegerField()),
+                ('like', models.IntegerField(default=0)),
+                ('dislike', models.IntegerField(default=0)),
                 ('title', models.CharField(max_length=50)),
                 ('tag', models.CharField(max_length=50)),
                 ('cat_name', models.ForeignKey(to='socialapp.Category')),
             ],
         ),
         migrations.CreateModel(
-            name='Users',
+            name='Reply',
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
-                ('username', models.CharField(max_length=50)),
-                ('password', models.IntegerField()),
-                ('email', models.CharField(max_length=50)),
-                ('is_admin', models.IntegerField()),
-                ('is_blocked', models.IntegerField()),
+                ('R_body', models.CharField(max_length=255)),
+                ('R_user', models.ForeignKey(to=settings.AUTH_USER_MODEL)),
+                ('post_id', models.ForeignKey(to='socialapp.Comment')),
             ],
+        ),
+        migrations.CreateModel(
+            name='Unwanted',
+            fields=[
+                ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
+                ('word', models.CharField(max_length=50)),
+            ],
+        ),
+        migrations.AddField(
+            model_name='comment',
+            name='id_post',
+            field=models.ForeignKey(to='socialapp.Posts'),
         ),
     ]

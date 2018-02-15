@@ -6,6 +6,7 @@ from models import Category
 from models import Unwanted
 
 
+
 from form import Userform
 from form import Postform
 from form import Catform
@@ -77,7 +78,7 @@ def updatepst (request,pst_id):
 def newPost(request):
     Post_form =Postform()
     if request.method == "POST":
-        Post_form=Postform(request.POST)
+        Post_form=Postform(request.POST,request.FILE)
         if Post_form.is_valid():
             Post_form.save()
             return HttpResponseRedirect('/socialapp/allposts')
