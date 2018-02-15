@@ -12,7 +12,7 @@
 
 	<nav class="navbar navbar-expand-md navbar-dark bg-dark">
 <!--   <a class="navbar-brand" href="#">Logo</a>-->
-	  <img src="iti.png"  />
+	  <img src="{% static 'img/iti.png' %}"  />
 
    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" >
     <span class="navbar-toggler-icon"></span>
@@ -38,9 +38,9 @@
 <!-- end navbar -->
 <br>
 <div class="container">
-   	<a href="/socialapp/dashboard"><button class="btn btn-success" style="width: 150px">back</button></a></a>
+   	<a href="/socialapp/dashboard"><button class="btn btn-success" style="width: 150px;margin-bottom: 10px">back</button></a></a>
 
-    <h3 class="alert alert-danger text-center" style="margin-top: 20px">USER PAGE</h3>
+    <h3 class="alert alert-danger text-center" style="margin-top: 20px;margin-bottom: 10px">USER PAGE</h3>
 	<table class="table table-hover text-center">
 	<thead class="thead-dark ">
     <tr>
@@ -70,10 +70,10 @@
 	<td><a href="/socialapp/{{usr.id}}/block"><button class="btn btn-danger">block</button></a></td>
 	{% endif %}
 	{% if usr.is_active == 0 %}
-	<td><a href="/socialapp/{{usr.id}}/unblock"><button class="btn btn-warninig">unblock</button></a></a></td>
+	<td><a href="/socialapp/{{usr.id}}/unblock"><button class="btn btn-warninig" style="margin-bottom: 10px">unblock</button></a></a></td>
 	{% endif %}
-	<td><a href="/socialapp/{{usr.id}}/promote"><button class="btn btn-info">promote</button></a></a></td>
-    <td><a href="/socialapp/{{usr.id}}/update"><button class="btn btn-success">update</button></a></a></td>
+	<td><a href="/socialapp/{{usr.id}}/promote"><button class="btn btn-info" style="margin-bottom: 10px">promote</button></a></a></td>
+    <td><a href="/socialapp/{{usr.id}}/update"><button class="btn btn-success" style="margin-bottom: 10px">update</button></a></a></td>
 	{% endif %}
 
     </tr>

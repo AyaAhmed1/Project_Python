@@ -1,32 +1,70 @@
+{% load static %}
 <!DOCTYPE html>
 <html>
 <head>
 	<title></title>
-	<style>
-table, th, td {
-    border: 1px solid black;
-}
-</style>
+	<link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap.min.css' %}">
+ 	<link rel="stylesheet" type="text/css" href="{% static 'css/font-awesome.min.css' %}">
 </head>
 <body>
-		<a href="/socialapp/dashboard">back</a>
+
+<!--  start navbar -->
+
+	<nav class="navbar navbar-expand-md navbar-dark bg-dark">
+<!--   <a class="navbar-brand" href="#">Logo</a>-->
+	  <img src="iti.png"  />
+
+   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" >
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarNav">
+    <ul class="navbar-nav">
+      <li class="nav-item active">
+        <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#">Track</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#">about</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#">Contact</a>
+      </li>
+     
+	</ul>
+  </div>
+</nav>
+<!-- end navbar -->
+<div class="container">
+		<br>
+   	<a href="/socialapp/dashboard"><button class="btn btn-success" style="width: 150px;margin-bottom: 10px">back</button></a>
+   	     <a href="/socialapp/newword"><button class="btn btn-info" style="width: 150px;margin-bottom: 10px">Add word</button></a>
+
+
+             <h3 class="alert alert-danger text-center" style="margin-top: 20px">UNWANTED WORD PAGE</h3>
 
 
 
-     <a href="/socialapp/newword">add new unwanted word</a>
 
-	<table>
+	  <table class="table table-hover text-center">
+	<thead class="thead-dark ">
+    <tr>
 	<th>word</th>
 	<th colspan="2">action</th>
-	<!-- <th>track</th> -->
+
+	</tr>
+    </thead>
+    <tbody>
 	{% for wrd in allwords %}
 	<tr>
+
 	<td>{{wrd.word}}</td>
 	
 	
-	<td><a href="/socialapp/{{wrd.id}}/worddelete">delete</a></td>
+	<td><a href="/socialapp/{{wrd.id}}/worddelete"><button class="btn btn-danger" style="width: 150px;margin-bottom: 10px">delete</button></a>
 
-	<td><a href="/socialapp/{{wrd.id}}/wordupdate">update</a></td>
+	<a href="/socialapp/{{wrd.id}}/wordupdate"><button class="btn btn-info" style="width:150px;margin-bottom: 10px">update</button></td>
 
 
 
@@ -36,6 +74,15 @@ table, th, td {
 
 	{% endfor%}
 
-    </table>
+    </tbody>
+		</table>
+
 
 </div>
+
+
+<script type="text/javascript" src="{% static 'js/jquery.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
+</body>
+</html>
+
