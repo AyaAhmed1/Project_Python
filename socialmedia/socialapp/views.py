@@ -13,6 +13,9 @@ from form import Postform
 from form import Catform
 from form import Wordform
 
+from form import RegistrationForm
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth import authenticate,login
 
 
 
@@ -192,3 +195,14 @@ def home(request):
         posts = paginator.page(paginator.num_pages)
     context= {"all_categories":all_categories,"posts":posts}
     return render(request, "pages/home.html" , context)
+
+def signUp(request):
+	user_form=RegistrationForm()
+	if request.method=="POST":
+		user_form=RegistrationForm(request.POST)
+		if user_form.is_valid():
+			user_form.save()
+			return HttpResponseRedirect("/socialapp/home/")
+	context={"form":user_form}
+	return render(request,"user/new.html",context)
+

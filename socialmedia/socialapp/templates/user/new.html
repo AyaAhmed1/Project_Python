@@ -1,0 +1,10 @@
+
+{% if form.has_errors %}
+<p>Your username or password don't mat</p>
+{% endif %}
+<h1>new User</h1>
+<br/>
+<form method="post">{% csrf_token%}
+	{{form.as_p}}
+	<button type="submit">save</button>
+</form>	
