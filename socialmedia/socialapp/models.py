@@ -10,19 +10,21 @@ class Category(models.Model):
 
 class Posts(models.Model):
     # img = models.ImageField(blank=True,default='1.jpeg')
-    img = models.ImageField(blank=True,default='1.jpeg')
+    img = models.CharField(max_length = 255)
     p_body = models.TextField()
     like = models.IntegerField(default=0)
     dislike = models.IntegerField(default=0)
     title = models.CharField(max_length = 255)
     tag = models.CharField(max_length = 255)
     cat_name = models.ForeignKey(Category)
-    time=models.DateTimeField()
+    time=models.DateTimeField(auto_now_add=True)
 
 class Comment(models.Model):
     c_body = models.CharField(max_length = 255)
     c_user = models.ForeignKey(User)
     id_post = models.ForeignKey(Posts)
+    time=models.DateTimeField()
+
 
 class Reply(models.Model):
     R_body = models.CharField(max_length = 255)
