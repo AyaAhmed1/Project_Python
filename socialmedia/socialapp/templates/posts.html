@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block content %}
+{% if posts.count > 0 %}
+{% for post in posts %}
+<div>
+<h2><a href="/posts/get/{{post.id}}/">{{post.title}}</a></h2>
+<h2>Language is: {{language}}</h2>
+<h2>Session Language is : {{session_language}}</h2>
+<p>{{post.p_body|lower|truncatewords:"10"}}</p>
+</div>
+{% endfor %}
+{% else %}
+<p>None to show!</p>
+{% endif %}
+{% endblock %} 
+ 
