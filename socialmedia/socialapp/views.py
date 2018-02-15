@@ -12,7 +12,6 @@ def allCategories(request):
     context= {"all_categories":all_categories,"all_posts":top_posts}
     return render(request, "pages/all_cat.html" , context)
 
-
 def Category_posts(request,cat_id):
     all_Category_posts=Posts.objects.filter(cat_name_id=cat_id)
     cat_name=Category.objects.get(id=cat_id)
@@ -25,16 +24,17 @@ def Post_Page(request,post_id):
     context={"post_data" : post, "all_categories" :all_categories}
     return render (request,"pages/post_page.html",context)
 
-
-def trial(request):
-    user_list = Posts.objects.order_by('time')
+def home(request):
+    all_categories =Category.objects.all()
+    post_list = Posts.objects.order_by('time')
     page = request.GET.get('page', 1)
-    paginator = Paginator(user_list, 2)
-    try:
-        users = paginator.page(page)
-    except PageNotAnInteger:
-        users = paginator.page(1)
-    except EmptyPage:
-        users = paginator.page(paginator.num_pages)
 
-    return render(request, "pages/try.html", { 'users': users })
+    paginator = Paginator(post_list, 5)
+    try:
+        posts = paginator.page(page)
+    except PageNotAnInteger:
+        posts = paginator.page(1)
+    except EmptyPage:
+        posts = paginator.page(paginator.num_pages)
+    context= {"all_categories":all_categories,"posts":posts}
+    return render(request, "pages/home.html" , context)
