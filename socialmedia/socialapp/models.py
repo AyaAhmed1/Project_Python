@@ -8,9 +8,10 @@ class Category(models.Model):
         return self.category_name
 
 
+
+
 class Posts(models.Model):
-    # img = models.ImageField(blank=True,default='1.jpeg')
-    img = models.CharField(max_length = 255)
+    img = models.ImageField(upload_to='upload' ,default='1.jpeg', blank=True)
     p_body = models.TextField()
     like = models.IntegerField(default=0)
     dislike = models.IntegerField(default=0)

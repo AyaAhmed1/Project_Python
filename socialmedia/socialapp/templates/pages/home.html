@@ -72,7 +72,8 @@
     {%  for post in posts %}
   <div class="border text-center ">
   <h2> {{post.title }} </h2>
-    <a href="/socialapp/{{post.id}}/post_page"> <img width="300" height="200" src="{%static  post.img %}" > </a>
+    <a href="/socialapp/{{post.id}}/post_page">   <img src="{% static "" %}img/{{ post.img }}" width="400">
+ </a>
     <br/>
     <p> {{post.p_body}} </p>
     <span> tags:#{{post.tag}} </span>

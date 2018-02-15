@@ -36,7 +36,8 @@
 
 <div class="border">
   <h2> {{posts.title }} </h2>
-  <a href="/socialapp/{{posts.id}}/post_page"> <img width="350" height="350" src="{%static  posts.img %}" ></a>
+  <a href="/socialapp/{{posts.id}}/post_page">  <img src="{% static ""%}img/{{ posts.img }}" alt="photo" width=300>
+</a>
 
   <br/>
   <p> {{posts.p_body}} </p>

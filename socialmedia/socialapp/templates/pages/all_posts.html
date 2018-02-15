@@ -47,7 +47,7 @@
 
 {% for pst in allposts %}
 <div style="margin-top: 20px" class="alert alert-danger">
-	
+	<img src="{% static ""%}img/{{ pst.img }}" alt="photo" width=300>
  
 <h3>title : {{pst.title}}</h3>
 <p>post : {{pst.p_body}}</p>

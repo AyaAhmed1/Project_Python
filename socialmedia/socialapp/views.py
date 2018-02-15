@@ -79,12 +79,12 @@ def updatepst (request,pst_id):
 def newPost(request):
     Post_form =Postform()
     if request.method == "POST":
-        Post_form=Postform(request.POST)
+        Post_form=Postform(request.POST, request.FILES)
         if Post_form.is_valid():
             Post_form.save()
             return HttpResponseRedirect('/socialapp/allposts')
     context = {"form" : Post_form}
-    return render (request ,'pages/newpost.html',context)
+    return render (request ,'pages/newpost.html', context)
 
 
 # category part
