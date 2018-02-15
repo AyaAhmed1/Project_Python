@@ -7,13 +7,13 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('socialapp', '0005_auto_20180213_1739'),
+        ('socialapp', '0004_comment_time'),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='reply',
-            name='post_id',
-            field=models.ForeignKey(to='socialapp.Comment'),
+            model_name='posts',
+            name='img',
+            field=models.CharField(max_length=255),
         ),
     ]
