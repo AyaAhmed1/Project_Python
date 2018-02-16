@@ -5,26 +5,33 @@ from django.utils import timezone
 class Category(models.Model):
     category_name = models.CharField(max_length = 50)
 
-
 class Posts(models.Model):
+    # img = models.ImageField(blank=True,default='1.jpeg')
     img = models.CharField(max_length = 255)
-    p_body = models.CharField(max_length = 255)
-    like = models.IntegerField()
-    dislike = models.IntegerField()
+    p_body = models.TextField()
+    like = models.IntegerField(default=0)
+    dislike = models.IntegerField(default=0)
     title = models.CharField(max_length = 255)
-    tag = models.CharField(max_length = 50)
-    cat_name= models.ForeignKey(Category)
-    time= models.DateTimeField()
+    tag = models.CharField(max_length = 255)
+    cat_name = models.ForeignKey(Category)
+    time=models.DateTimeField(auto_now_add=True)
+    def __str__(self):
+        return self.title
 
 class Comment(models.Model):
     c_body = models.CharField(max_length = 255)
     c_user = models.ForeignKey(User)
     id_post = models.ForeignKey(Posts)
+    time=models.DateTimeField()
+
 
 class Reply(models.Model):
     R_body = models.CharField(max_length = 255)
     R_user = models.ForeignKey(User)
     post_id = models.ForeignKey(Comment)
+
+    def __str__(self):
+        return self.id
 
 class CateUsr(models.Model):
     user = models.ForeignKey(User)
