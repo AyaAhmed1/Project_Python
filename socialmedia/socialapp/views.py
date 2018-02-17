@@ -3,6 +3,7 @@ from django.http import HttpResponse , HttpResponseRedirect
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.contrib.auth.models import User
 from models import Posts
+from models import Comment
 from models import Category
 from models import Unwanted
 
@@ -13,10 +14,14 @@ from form import Postform
 from form import Catform
 from form import Wordform
 
+
 from form import RegistrationForm
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate,login
-
+from django.views.decorators.csrf import csrf_exempt
+from django.http import JsonResponse
+import datetime
+from django.utils.timezone import utc
 
 
 def dashboard(request):
@@ -177,8 +182,10 @@ def Category_posts(request,cat_id):
 
 def Post_Page(request,post_id):
     post=Posts.objects.filter(id=post_id)
+    all_comments=Comment.objects.order_by('-time').filter(id_post_id=post_id)
+    all_users=User.objects.all()
     all_categories =Category.objects.all()
-    context={"post_data" : post, "all_categories" :all_categories}
+    context={"post_data" : post, "all_categories" :all_categories,"allcomments":all_comments,"allusers":all_users}
     return render (request,"pages/post_page.html",context)
 
 def home(request):
@@ -205,4 +212,35 @@ def signUp(request):
 			return HttpResponseRedirect("/socialapp/home/")
 	context={"form":user_form}
 	return render(request,"user/new.html",context)
+@csrf_exempt
+def add_comment(request,post_id):
+    if request.method =='POST':
+        com_body=request.POST.get("comment",None)
+        comment=Comment.objects.create(c_body=com_body,id_post_id=post_id,c_user_id=1,time=datetime.datetime.utcnow())#### 1
+        comment.save()
+	user_name="ghada" #######
+        data={'success':True,'user_name':user_name,'time':datetime.datetime.utcnow(),}
+        return JsonResponse(data)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+
 

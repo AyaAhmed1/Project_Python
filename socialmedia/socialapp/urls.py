@@ -29,6 +29,6 @@ urlpatterns = [
     url(r'^(?P<post_id>[0-9]+)/post_page/$', views.Post_Page),
     url(r'^home/$' , views.home),
     url(r'^signup/$',views.signUp),
-
+    url(r'^(?P<post_id>[0-9]+)/comment/$',views.add_comment),
 
 ]

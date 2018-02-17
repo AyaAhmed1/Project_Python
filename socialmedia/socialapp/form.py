@@ -3,6 +3,7 @@ from django.contrib.auth.models import User
 from . models import Posts
 from . models import Category
 from . models import Unwanted
+from . models import Comment
 
 import re
 from django.contrib.auth.forms import UserCreationForm
@@ -33,6 +34,10 @@ class Wordform(forms.ModelForm):
         model = Unwanted
         fields=('word',)
 
+#class CommentForm (forms.ModelForm):
+    #class Meta:
+        #model = Comment
+        #fields=('id_post','c_user','c_body')
 
 class RegistrationForm(UserCreationForm):
 

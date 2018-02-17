@@ -50,25 +50,83 @@
     <br/>
 
     </div>
+
     <div class="border text-left">
       <button type="button" class="btn btn-default btn-sm">
        <span class="glyphicon glyphicon-thumbs-up"></span> Like
-     </button>
+      </button>
         <label>{{post.like}} </label>
         <button type="button" class="btn btn-default btn-sm">
          <span class="glyphicon glyphicon-thumbs-down"></span> Unlike
        </button>
       <label>{{post.dislike}} </label>
-      <div align="right">
-    <input type="text" placeholder="Add Comment"  id="comment_value">
-    <button type="button" class="btn btn-primary" id="add_comment">Comment</button>
-  </div>
+    <input type="text" placeholder="Add Comment"  id="comment_value" width="250px">
+    <button type="button" class="btn btn-primary" id="add_comment" post_id="{{post.id}}">Comment</button>
     </div>
-    <div >Comments </div>
+    <div class="border text-center">
+      <span>Comments</span> 
+    </div>
+    <div class="border text-left" id="comments_post">
+      {% load static %}
+      {% for comment in allcomments %}
+        {% if comment.id_post_id == post.id %}
+          <hr/>
+          <div  class="comm">
+          {% for user in allusers %}
+            {% if user.id == comment.c_user_id %}
+              <h3>{{user.username}}</h3>
+            {% endif %} 
+          {% endfor %}
+          <p>{{comment.time}}</p>
+          <p>{{comment.c_body}}</p>
+          </div>          
+        {% endif %}
+      {% endfor %}
+
+    </div>
 </div>
  {% endfor %}
+ 
 
     </body>
     <script src="{% static 'jquery.min.js' %}"></script>
-    <script src="{% static 'bootstrap.bundle.min.js' %}"></script>
+    <script src="{% static 'js/jquery-3.1.1.js' %}"></script>
+    <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
+    <script type="text/javascript">
+      $(document).ready(function(){
+        $('#add_comment').on('click',function(e){
+         //var post_id=$(this).attr("post_id");
+         //console.log(post_id); 
+          var url_path=window.location.href;
+          var path=url_path.replace("post_page","comment");
+          var comment_data =$("#comment_value").val();
+          $.ajax({
+            type:'POST',
+            url: path,
+            data:{'comment':comment_data},
+            success:function(data){
+              if(data.success)
+              {  
+                $("#comment_value").val("");
+                var div_com=document.createElement("div");
+                div_com.setAttribute("class","comm");
+                var name_user=document.createElement("h3");
+                name_user.innerhtml=data.user_name;
+                var time= document.createElement("p");
+                time.innerhtml=data.time;
+                var text_com=document.createElement("p");
+                text_com.innerhtml=comment_data;
+                div_com.appendChild(name_user);
+                div_com.appendChild(time);
+                div_com.appendChild(text_com);
+                var main_div=document.getElementById("comments_post");
+                main_div.appendChild(div_com);
+              }  
+            }
+          });
+                                                                                                                                                                
+        });
+      });
+      
+    </script>
   </html>
