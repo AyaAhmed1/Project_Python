@@ -30,5 +30,5 @@ urlpatterns = [
     url(r'^home/$' , views.home),
     url(r'^trial/$', views.trial),
     url(r'^home/get_search/', views.get_search, name='get_search'),
-
-]
+    url(r'^(?P<keyword>[a-zA-Z]+)/filter/$', views.filter),
+    ]

@@ -7,11 +7,6 @@ from models import Category
 from models import Unwanted
 from django.db.models import Q
 
-
-
-
-
-
 def dashboard(request):
     return render(request,'pages/dashboard.html')
 
@@ -212,3 +207,9 @@ def get_search(request):
         data = 'fail'
     mimetype = 'application/json'
     return HttpResponse(data, mimetype)
+
+def filter(request,keyword):
+    Posts_match_title=Posts.objects.filter(title__contains=keyword)
+    Posts_match_tag=Posts.objects.filter(tag__contains=keyword)
+    context={"Posts_match_title" :Posts_match_title ,"Posts_match_tag":Posts_match_tag}
+    return render (request,"pages/filter.html",context)

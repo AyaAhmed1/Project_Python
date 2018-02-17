@@ -1,0 +1,77 @@
+<!doctype html>
+<html >
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="bootstrap.min.css">
+    {% load static %}
+        <link rel="stylesheet" href="{%static 'bootstrap.min.css' %}">
+    <style>
+      .border{
+      border:1px solid black;
+    }
+    .bar{
+      background-color:#0059FF;
+
+    }
+    </style>
+  </head>
+<body>
+  <div  class="row">
+      <div class="col-2"> </div>
+  {% load static %}
+  <div class=" col-8 text-center">
+        <h2>  Matched Title Posts </h2>
+          <br/>
+        {% if Posts_match_title.count == 0 %}
+            <h3>No matched title found </h3>
+            <br/>
+        {% else %}
+    {%  for posts in Posts_match_title %}
+
+  <div class="border">
+    <h2> {{posts.title }} </h2>
+    <a href="/socialapp/{{posts.id}}/post_page"> <img width="350" height="350" src="{%static  posts.img %}" ></a>
+
+    <br/>
+    <p> {{posts.p_body}} </p>
+    <span> tags:{{posts.tag}} </span>
+  <br/>
+    <span> Category:{{cat_name.category_name}} </span>
+  </div>
+  <br/>
+    {% endfor %}
+    {% endif %}
+<h2> Matched Tags </h2>
+{% if Posts_match_tag.count == 0 %}
+        <h3>No matched tags found </h3>
+        <br/>
+    {% else %}
+
+{%  for posts in Posts_match_tag %}
+<div class="border">
+<h2> {{posts.title }} </h2>
+<a href="/socialapp/{{posts.id}}/post_page"> <img width="350" height="350" src="{%static  posts.img %}" ></a>
+
+<br/>
+<p> {{posts.p_body}} </p>
+<span> tags:{{posts.tag}} </span>
+<br/>
+<span> Category:{{cat_name.category_name}} </span>
+</div>
+<br/>
+{% endfor %}
+{% endif %}
+
+
+
+
+
+      </div>
+  <div class="col-2"> </div>
+  </div>
+    </body>
+    <script src="{% static 'jquery.min.js' %}"></script>
+    <script src="{% static 'bootstrap.bundle.min.js' %}"></script>
+  </html>

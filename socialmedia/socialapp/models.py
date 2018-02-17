@@ -6,7 +6,6 @@ class Category(models.Model):
     category_name = models.CharField(max_length = 50)
 
 class Posts(models.Model):
-    # img = models.ImageField(blank=True,default='1.jpeg')
     img = models.CharField(max_length = 255)
     p_body = models.TextField()
     like = models.IntegerField(default=0)
@@ -29,9 +28,6 @@ class Reply(models.Model):
     R_body = models.CharField(max_length = 255)
     R_user = models.ForeignKey(User)
     post_id = models.ForeignKey(Comment)
-
-    def __str__(self):
-        return self.id
 
 class CateUsr(models.Model):
     user = models.ForeignKey(User)
