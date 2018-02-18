@@ -32,6 +32,7 @@ STATIC_URL = '/static/'
 
 INSTALLED_APPS = (
     'socialapp',
+    
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',

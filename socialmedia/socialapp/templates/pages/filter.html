@@ -38,7 +38,16 @@
     <p> {{posts.p_body}} </p>
     <span> tags:{{posts.tag}} </span>
   <br/>
-    <span> Category:{{cat_name.category_name}} </span>
+
+
+  {%  for category in all_categories %}
+    {% if posts.cat_name_id == category.id %}
+
+
+  <span> Category:{{category.category_name}} </span>
+   {% endif %}
+   {% endfor %}
+
   </div>
   <br/>
     {% endfor %}
@@ -58,7 +67,13 @@
 <p> {{posts.p_body}} </p>
 <span> tags:{{posts.tag}} </span>
 <br/>
-<span> Category:{{cat_name.category_name}} </span>
+{%  for category in all_categories %}
+  {% if posts.cat_name_id == category.id %}
+
+<span> Category:{{category.category_name}} </span>
+ {% endif %}
+ {% endfor %}
+
 </div>
 <br/>
 {% endfor %}

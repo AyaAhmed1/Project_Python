@@ -148,9 +148,6 @@ def worddelete(request,wrd_id):
     return HttpResponseRedirect("/socialapp/allwords")
 
 
-
-
-
 def allCategories(request):
     all_categories =Category.objects.all()
     top_posts=Posts.objects.order_by('time')
@@ -171,10 +168,10 @@ def Post_Page(request,post_id):
 
 def home(request):
     all_categories =Category.objects.all()
-    post_list = Posts.objects.order_by('time')
+    post_list = Posts.objects.order_by('-id')
     page = request.GET.get('page', 1)
 
-    paginator = Paginator(post_list, 2)
+    paginator = Paginator(post_list,2)
     try:
         posts = paginator.page(page)
     except PageNotAnInteger:
@@ -183,11 +180,6 @@ def home(request):
         posts = paginator.page(paginator.num_pages)
     context= {"all_categories":all_categories,"posts":posts}
     return render(request, "pages/home.html" , context)
-
-def trial (request):
-    all_categories =Category.objects.all()
-    context={"all_categories" :all_categories}
-    return render (request,"pages/trial.html",context)
 
 import json
 def get_search(request):
@@ -211,5 +203,6 @@ def get_search(request):
 def filter(request,keyword):
     Posts_match_title=Posts.objects.filter(title__contains=keyword)
     Posts_match_tag=Posts.objects.filter(tag__contains=keyword)
-    context={"Posts_match_title" :Posts_match_title ,"Posts_match_tag":Posts_match_tag}
+    all_categories =Category.objects.all()
+    context={"Posts_match_title" :Posts_match_title ,"Posts_match_tag":Posts_match_tag,"all_categories":all_categories}
     return render (request,"pages/filter.html",context)
