@@ -1,12 +1,17 @@
 <!doctype html>
 <html >
   <head>
-
+ <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
     <meta name="viewport" content="width=device-width, initial-scale=1">
-      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-    <style>
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <!-- jQuery !-->
+            <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"> </script>
+    <!-- jQuery UI !-->
+    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
+
+    <!-- <style>
       .border{
       border:1px solid black;
       width:60%
@@ -16,15 +21,14 @@
       font-display: white;
     }
 
-    </style>
+    </style> -->
+    {% load static %}
+    <link rel="stylesheet" href="{%static 'bootstrap.min.css' %}">
   </head>
 <body>
-  <nav class="navbar navbar-expand-md  bar">
-    {% load static %}
-  <div class="navbar-brand" >   <img src="{% static  'photos/6.jpg' %}" width="40" height="40"/><span> News </span> </div>
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" >
-   <span class="navbar-toggler-icon"></span>
-  </nav>
+
+    {% include 'pages/navbar.html' %}
+
 
 <br/>
 <br/>
@@ -37,7 +41,8 @@
     <div class="border text-center">
 
     <h2> {{post.title }} </h2>
-    <img width="350" height="350" src="{%static  post.img %}" >
+      <img src="{% static ""%}img/{{ post.img }}" alt="photo" width=300>
+
     <br/>
     <p> {{post.p_body}} </p>
     <span> tags:#{{post.tag}} </span>
@@ -69,6 +74,5 @@
  {% endfor %}
 
     </body>
-    <script src="{% static 'jquery.min.js' %}"></script>
     <script src="{% static 'bootstrap.bundle.min.js' %}"></script>
   </html>

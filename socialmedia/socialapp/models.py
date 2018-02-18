@@ -6,6 +6,9 @@ class Category(models.Model):
     category_name = models.CharField(max_length = 50)
     def __str__(self):
         return self.category_name
+#alaa
+    users = models.ManyToManyField(User, null = True ,blank = True)
+
 
 
 
@@ -13,8 +16,12 @@ class Category(models.Model):
 class Posts(models.Model):
     img = models.ImageField(upload_to='upload' ,default='1.jpeg', blank=True)
     p_body = models.TextField()
-    like = models.IntegerField(default=0)
-    dislike = models.IntegerField(default=0)
+    # like = models.IntegerField(default=0)
+    # dislike = models.IntegerField(default=0)
+    #alaa
+    like = models.ManyToManyField(User, null=True, blank=True, related_name="like")
+    dislike = models.ManyToManyField(User, null=True, blank=True, related_name="dislike")
+
     title = models.CharField(max_length = 255)
     tag = models.CharField(max_length = 255)
     cat_name = models.ForeignKey(Category)
@@ -38,6 +45,8 @@ class Reply(models.Model):
 class CateUsr(models.Model):
     user = models.ForeignKey(User)
     categ = models.ForeignKey(Category)
+    status=models.BooleanField(default=True)#alaa
+
 
 class Unwanted(models.Model):
     word = models.CharField(max_length = 50)

@@ -8,19 +8,7 @@
 </head>
 <body>
 
-<!--  start navbar -->
-
-{% include 'pages/navbar.html' %}
-
-<!-- end navbar -->
-<br>
-<div class="container">
-             <h3 class="alert alert-danger text-center" style="margin-top: 20px">NEW POST</h3>
-<br/>
-<form method="POST" enctype="multipart/form-data">{%csrf_token%}
-	<h3>{{form.as_p}}</h3>
-	<button type='submit' class="btn btn-info" >Save</button>
-
+	<h3 class="alert alert-danger text-center">You have no permission to access </h3>
 <script type="text/javascript" src="{% static 'js/jquery.min.js' %}"></script>
 <script type="text/javascript" src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
 </body>

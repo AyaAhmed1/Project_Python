@@ -5,48 +5,61 @@
 	<title></title>
 	<link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap.min.css' %}">
  	<link rel="stylesheet" type="text/css" href="{% static 'css/font-awesome.min.css' %}">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 </head>
-<body style="background-color: black">
+<body style="background-color: #ddd">
 
 <!--  start navbar -->
 
-	<nav class="navbar navbar-expand-md navbar-dark bg-dark">
-<!--   <a class="navbar-brand" href="#">Logo</a>-->
-    <img src="{% static 'img/iti.png' %}"  />
+	{% include 'pages/navbar.html' %}
 
-   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" >
-    <span class="navbar-toggler-icon"></span>
-  </button>
-  <div class="collapse navbar-collapse" id="navbarNav">
-    <ul class="navbar-nav">
-      <li class="nav-item active">
-        <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="#">Track</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="#">about</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="#">Contact</a>
-      </li>
-     
-	</ul>
-  </div>
-</nav>
+
+
+
 <!-- end navbar -->
 <div class="container">
 	<!-- <a href="/socialapp/{{usr_id}}" -->
 		    <div class="row text-center">
-			<a href="/socialapp/allusers" class="col-sm-12 col-md-6 col-lg-3"><button class="btn btn-danger" style="width: 200px;height: 200px ;margin: 20px" ><h3>USERS</h3></button></a>
-		    <a href="/socialapp/allposts" class="col-sm-12 col-md-6 col-lg-3"><button class="btn btn-warning" style="width: 200px;height: 200px;margin: 20px"><h3>POSTS</h3></button></a>
-			<a href="/socialapp/allcat" class="col-sm-12 col-md-6 col-lg-3"><button class="btn btn-success" style="width: 200px;height: 200px;margin: 20px"><h4>CATEGORIES</h4></button></a>
-			<a href="/socialapp/allwords" class="col-sm-12 col-md-6 col-lg-3"><button class="btn btn-info" style="width: 200px;height: 200px;margin: 20px"><h3>WORDS</h3></button></a>
+			<a href="/socialapp/allusers" class="col-sm-12 col-md-6 col-lg-3"><button class="btn btn-danger" style="width: 200px;height: 200px ;margin: 20px" > <i class="material-icons" style="font-size:36px">group</i><h3>USERS</h3> <h3>{{ allusers.count }}</h3></button></a>
+		    <a href="/socialapp/allposts" class="col-sm-12 col-md-6 col-lg-3"><button class="btn btn-warning" style="width: 200px;height: 200px;margin: 20px"><i class="material-icons" style="font-size:36px">import_contacts</i><h3>POSTS</h3><h3>{{ allposts.count }}</h3></button></a>
+			<a href="/socialapp/allcat" class="col-sm-12 col-md-6 col-lg-3"><button class="btn btn-success" style="width: 200px;height: 200px;margin: 20px"><i class="material-icons" style="font-size:36px">apps</i>
+<h4>CATEGORIES</h4> <h3>{{ allcats.count }}</h3></button></a>
+			<a href="/socialapp/allwords" class="col-sm-12 col-md-6 col-lg-3"><button class="btn btn-info" style="width: 200px;height: 200px;margin: 20px"><i class="material-icons" style="font-size:36px">do_not_disturb_alt</i>
+<h3>WORDS</h3> <h3>{{ allwords.count }}</h3></button></a>
             </div>
-            <div class ="text-center">
+           <!--  <div class ="text-center">
             <a href="/socialapp/dashboard"><button class="btn btn-info" style="width: 400px ;margin:30px ">back</button></a></a>
-           </div>
+           </div> -->
+
+
+<br>
+<label>Users</label>
+
+<div class="progress">
+  <div class="progress-bar progress-bar-striped bg-danger" role="progressbar" style="width: {{ allusers.count }}%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+</div>
+<br>
+<label>Posts</label>
+
+<div class="progress">
+  <div class="progress-bar progress-bar-striped bg-warning" role="progressbar" style="width: {{ allposts.count }}%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+</div>
+<br>
+<label>Categories</label>
+
+<div class="progress">
+  <div class="progress-bar progress-bar-striped bg-success" role="progressbar" style="width: {{ allcats.count }}%" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
+</div>
+<br>
+<label>words</label>
+<div class="progress">
+  
+  <div class="progress-bar progress-bar-striped bg-info" role="progressbar" style="width: {{ allwords.count }}%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
+</div>
+
+<br>
+<br>
 
 
 
