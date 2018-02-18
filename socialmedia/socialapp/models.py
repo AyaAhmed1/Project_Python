@@ -23,16 +23,16 @@ class Comment(models.Model):
     c_body = models.CharField(max_length = 255)
     c_user = models.ForeignKey(User)
     id_post = models.ForeignKey(Posts)
-    time=models.DateTimeField(auto_now_add=True)    
-
+    time=models.DateTimeField()    
+    R_check=models.IntegerField(default=0) 
 
 class Reply(models.Model):
     R_body = models.CharField(max_length = 255)
     R_user = models.ForeignKey(User)
     post_id = models.ForeignKey(Comment)
+    time_reply=models.DateTimeField()   
 
-    def __str__(self):
-        return self.id
+    
 
 class CateUsr(models.Model):
     user = models.ForeignKey(User)

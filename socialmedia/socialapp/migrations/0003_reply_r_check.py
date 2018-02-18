@@ -7,13 +7,13 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('socialapp', '0005_auto_20180215_1627'),
+        ('socialapp', '0002_auto_20180217_1740'),
     ]
 
     operations = [
-        migrations.AlterField(
-            model_name='posts',
-            name='time',
-            field=models.DateTimeField(auto_now_add=True),
+        migrations.AddField(
+            model_name='reply',
+            name='R_check',
+            field=models.IntegerField(default=0),
         ),
     ]

@@ -79,6 +79,32 @@
           {% endfor %}
           <p>{{comment.time}}</p>
           <p>{{comment.c_body}}</p>
+          {% if comment.R_check %}
+            <p class=" text-center">Reply</p>
+            <div class="all_replys" class="border" rep_com_id="{{comment.id}}">
+            {% for reply in all_replys %}
+
+              {% if reply.post_id_id == comment.id %}
+               
+                <div class="rep"  >
+
+                  {% for user in allusers %}
+                    {% if user.id == reply.R_user_id %}
+                        <h4>{{user.username}}</h4>
+                    {% endif %} 
+                  {% endfor %}
+                  <p>{{reply.time_reply}}</p>
+                  <p>{{reply.R_body}}</p>
+                </div>
+              {% endif %}  
+            {% endfor %}
+          </div>
+          {% else %} 
+          <div c="{{comment.id}}">
+            <input type="text" placeholder="Add Reply"  class="reply_value" comment_id="{{comment.id}} width="250px">
+            <button type="button" class="btn btn-primary" class="add_reply" comment_id="{{comment.id}}">Reply</button>
+          </div>
+          {% endif %}
           </div>          
         {% endif %}
       {% endfor %}
@@ -86,18 +112,17 @@
     </div>
 </div>
  {% endfor %}
- 
 
     </body>
-    <script src="{% static 'jquery.min.js' %}"></script>
+    <script src="{% static 'jquery.min.js'  %}"></script>
     <script src="{% static 'js/jquery-3.1.1.js' %}"></script>
-    <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
+    <script src="{% static 'bootstrap.bundle.min.js' %}"></script>
     <script type="text/javascript">
       $(document).ready(function(){
-        $('#add_comment').on('click',function(e){
-         //var post_id=$(this).attr("post_id");
-         //console.log(post_id); 
+        
+        $('#add_comment').on('click',function(e){ 
           var url_path=window.location.href;
+          var post_id= $(this).attr("post_id");
           var path=url_path.replace("post_page","comment");
           var comment_data =$("#comment_value").val();
           $.ajax({
@@ -107,26 +132,38 @@
             success:function(data){
               if(data.success)
               {  
-                $("#comment_value").val("");
-                var div_com=document.createElement("div");
-                div_com.setAttribute("class","comm");
-                var name_user=document.createElement("h3");
-                name_user.innerhtml=data.user_name;
-                var time= document.createElement("p");
-                time.innerhtml=data.time;
-                var text_com=document.createElement("p");
-                text_com.innerhtml=comment_data;
-                div_com.appendChild(name_user);
-                div_com.appendChild(time);
-                div_com.appendChild(text_com);
-                var main_div=document.getElementById("comments_post");
-                main_div.appendChild(div_com);
+                $("#comment_value").val(" ");
+                $("#comments_post").prepend('<div class="comm"><h3>'+data.user_name+'</h3><p>'+data.time+'</p><p>'+data.comment+'</p> <input type="text" placeholder="Add Reply"  class="reply_value" comment_id="'+data.com_id+'" width="250px"><button type="button" class="btn btn-primary" class="add_reply" comment_id="'+data.com_id+'">Reply</button></div>');
               }  
             }
           });
                                                                                                                                                                 
         });
+    
+
+        $('button[comment_id]').on('click',function(e){
+          var parent=$(this).parent();
+          var reply_data =$(this).parent().children().eq(0).val();
+          console.log(reply_data); 
+          var comment_id=$(this).attr("comment_id");
+          console.log(comment_id);
+          var url_path=window.location.href;
+          var path=url_path.replace("post_page","reply");
+          $.ajax({
+            type:'POST',
+            url: path,
+            data:{'reply':reply_data,'comment_id':comment_id},
+            success:function(data){
+              if(data.success)
+              {  
+                parent.children().eq(0).val(" ");
+                parent.children().remove();
+                parent.prepend('<p class="text-center">Reply</p><h4>'+data.user_name+'</h4><p>'+data.time+'</p><p>'+data.reply+'</p>');
+              } 
+            } 
+          });
+        });
+
       });
-      
     </script>
   </html>

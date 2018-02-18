@@ -22,6 +22,8 @@ from django.views.decorators.csrf import csrf_exempt
 from django.http import JsonResponse
 import datetime
 from django.utils.timezone import utc
+from models import Unwanted
+from models import Reply
 
 
 def dashboard(request):
@@ -185,7 +187,11 @@ def Post_Page(request,post_id):
     all_comments=Comment.objects.order_by('-time').filter(id_post_id=post_id)
     all_users=User.objects.all()
     all_categories =Category.objects.all()
-    context={"post_data" : post, "all_categories" :all_categories,"allcomments":all_comments,"allusers":all_users}
+    words=Unwanted.objects.all()
+    replys=Reply.objects.all()
+    replys=checkReply(words,replys)
+    all_comments=check(words,all_comments)
+    context={"post_data" : post, "all_categories" :all_categories,"allcomments":all_comments,"allusers":all_users,'all_replys':replys}
     return render (request,"pages/post_page.html",context)
 
 def home(request):
@@ -216,15 +222,53 @@ def signUp(request):
 def add_comment(request,post_id):
     if request.method =='POST':
         com_body=request.POST.get("comment",None)
-        comment=Comment.objects.create(c_body=com_body,id_post_id=post_id,c_user_id=1,time=datetime.datetime.utcnow())#### 1
-        comment.save()
-	user_name="ghada" #######
-        data={'success':True,'user_name':user_name,'time':datetime.datetime.utcnow(),}
+        comment=Comment.objects.create(c_body=com_body,id_post_id=post_id,c_user_id=1,time=datetime.datetime.now())
+        words=Unwanted.objects.all()  
+        com_body=checkStr(words,com_body)   	   
+	user="yy"
+        data={'success':True,'user_name':user,'time':datetime.datetime.now(),'comment':com_body,'com_id':comment.id}
         return JsonResponse(data)
 
+@csrf_exempt
+def add_reply(request,post_id):
+    if request.method =='POST':
+        reply_body=request.POST.get("reply",None)
+        comm_id=request.POST.get("comment_id",None)
+        reply=Reply.objects.create(R_body=reply_body,post_id_id=comm_id,R_user_id=1,time_reply=datetime.datetime.now())
+        reply.save()
+        comment=Comment.objects.get(id=comm_id)
+        comment.R_check=1
+        comment.save()
+        words=Unwanted.objects.all()
+        reply_body=checkStr(words,reply_body)      	   
+	user="kkk"
+        data={'success':True,'user_name':user,'time':datetime.datetime.now(),'reply':reply_body}
+        return JsonResponse(data)
 
+def check(words,comments):
+   for comment in comments:
+	for word in words:
+		if word.word in comment.c_body:
+			star="*"*len(word.word)
+			comment.c_body=comment.c_body.replace(word.word,star)
+		
+   return comments
 
+def checkReply(words,replys):
+   for reply in replys:
+	for word in words:
+		if word.word in reply.R_body:
+			star="*"*len(word.word)
+			reply.R_body=reply.R_body.replace(word.word,star)
+		
+   return replys
 
+def checkStr(words,str_text):
+    for word in words:
+        if word.word in str_text:
+             star="*"*len(word.word)
+             str_text=str_text.replace(word.word,star)
+    return str_text
 
 
 

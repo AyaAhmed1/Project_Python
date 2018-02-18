@@ -32,6 +32,7 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
                 ('c_body', models.CharField(max_length=255)),
+                ('time', models.DateTimeField()),
                 ('c_user', models.ForeignKey(to=settings.AUTH_USER_MODEL)),
             ],
         ),
@@ -39,12 +40,13 @@ class Migration(migrations.Migration):
             name='Posts',
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
-                ('img', models.ImageField(default=b'1.jpeg', upload_to=b'', blank=True)),
-                ('p_body', models.CharField(max_length=255)),
+                ('img', models.CharField(max_length=255)),
+                ('p_body', models.TextField()),
                 ('like', models.IntegerField(default=0)),
                 ('dislike', models.IntegerField(default=0)),
-                ('title', models.CharField(max_length=50)),
-                ('tag', models.CharField(max_length=50)),
+                ('title', models.CharField(max_length=255)),
+                ('tag', models.CharField(max_length=255)),
+                ('time', models.DateTimeField(auto_now_add=True)),
                 ('cat_name', models.ForeignKey(to='socialapp.Category')),
             ],
         ),
@@ -53,8 +55,9 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
                 ('R_body', models.CharField(max_length=255)),
+                ('time_replay', models.DateTimeField()),
                 ('R_user', models.ForeignKey(to=settings.AUTH_USER_MODEL)),
-                ('post_id', models.ForeignKey(to='socialapp.Comment')),
+                ('id_comment', models.ForeignKey(to='socialapp.Comment')),
             ],
         ),
         migrations.CreateModel(

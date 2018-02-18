@@ -30,5 +30,6 @@ urlpatterns = [
     url(r'^home/$' , views.home),
     url(r'^signup/$',views.signUp),
     url(r'^(?P<post_id>[0-9]+)/comment/$',views.add_comment),
+    url(r'^(?P<post_id>[0-9]+)/reply/$',views.add_reply),
 
 ]
