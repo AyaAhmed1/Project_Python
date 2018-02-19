@@ -3,46 +3,28 @@
   <head>
  <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-    <!-- jQuery !-->
-            <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"> </script>
-    <!-- jQuery UI !-->
-    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
-
-    <!-- <style>
+  <style>
       .border{
       border:1px solid black;
       width:60%
     }
-    .bar{
-      background-color:#0059FF;
-      font-display: white;
-    }
-
-    </style> -->
+    </style>
     {% load static %}
     <link rel="stylesheet" href="{%static 'bootstrap.min.css' %}">
   </head>
 <body>
-
     {% include 'pages/navbar.html' %}
-
-
 <br/>
 <br/>
-
-  <div align="center" class="row">
-    <div class="col-1"> </div>
+<div class="container">
+  <div  class="row">
   {% load static %}
+    <div class="col-9">
     {%  for post in post_data %}
-    <div class="col-10">
     <div class="border text-center">
-
     <h2> {{post.title }} </h2>
-      <img src="{% static ""%}img/{{ post.img }}" alt="photo" width=300>
-
+      <img src="{% static ""%}img/{{ post.img }}" class="img-fluid "alt="photo" width="300" height="400">
     <br/>
     <p> {{post.p_body}} </p>
     <span> tags:#{{post.tag}} </span>
@@ -53,7 +35,6 @@
     {% endif %}
     {% endfor %}
     <br/>
-
     </div>
     <div class="border text-left">
       <button type="button" class="btn btn-default btn-sm">
@@ -70,9 +51,27 @@
   </div>
     </div>
     <div >Comments </div>
-</div>
- {% endfor %}
 
+ {% endfor %}
+</div>
+<div class="col-1"> </div>
+ <div class="col-2" >
+   <div class="w3-sidebar w3-bar-block border " style="width:20%" align="right">
+   <div class="text-center"><h3> Categories </h3> </div>
+   <hr/>
+   {%  for category in all_categories %}
+   <div class='text-center'>
+     <a href="/socialapp/{{category.id}}/cat_posts" class="w3-bar-item w3-button"> {{category.category_name}}</a>
+     <button  onclick="window.location.href='/socialapp/subscribe/{{category.id}}'" class="btn btn-primary"> Subscribe</button>
+    <hr/>
+   </div>
+   {% endfor %}
+        </div>
+      </div>
+    </div>
+</div>
+ <script src="{% static 'jquery.min.js' %}"></script>
+ <script src="{% static 'bootstrap.bundle.min.js' %}"></script>
+ <script src="{%static 'handler.js' %}"> </script>
     </body>
-    <script src="{% static 'bootstrap.bundle.min.js' %}"></script>
   </html>

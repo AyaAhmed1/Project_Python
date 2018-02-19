@@ -4,39 +4,39 @@
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
     <link rel="stylesheet" href="bootstrap.min.css">
+    <!-- jQuery !-->
+            <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"> </script>
+    <!-- jQuery UI !-->
+    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
+
     {% load static %}
         <link rel="stylesheet" href="{%static 'bootstrap.min.css' %}">
     <style>
       .border{
-      border:1px solid black;
+      border:3px solid black;
     }
     .bar{
       background-color:#0059FF;
-
     }
     </style>
   </head>
 <body>
-  <nav class="navbar navbar-expand-md  bar">
-    {% load static %}
- <div class="navbar-brand" ><a href="/socialapp/home/" > <img src="{% static  'photos/6.jpg' %}" width="40" height="40"/></a>
-   <span> News </span> </div>
- <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" >
-   <span class="navbar-toggler-icon"></span>
-</nav>
-<br/>
-
-
+  {% include 'pages/navbar.html' %}
+  <div class="container">
 <div  class="row">
-    <div class="col-2"> </div>
+
 {% load static %}
-<div class=" col-8 text-center">
+<div class=" col-9 text-center">
+  <br/>
+  <br/>
   {%  for posts in all_category_posts %}
 
 <div class="border">
   <h2> {{posts.title }} </h2>
-  <a href="/socialapp/{{posts.id}}/post_page">  <img src="{% static ""%}img/{{ posts.img }}" alt="photo" width=300>
+  <a href="/socialapp/{{posts.id}}/post_page">  <img src="{% static ""%}img/{{ posts.img }}"  class="img-fluid" alt="photo" width=400>
 </a>
 
   <br/>
@@ -48,9 +48,26 @@
 <br/>
   {% endfor %}
     </div>
-<div class="col-2"> </div>
+        <div class="col-1"> </div>
+    <div class="col-2" >
+      <br/>
+
+      <div class="w3-sidebar w3-bar-block border " style="width:20%" align="right">
+      <div class="text-center"><h3> Categories </h3> </div>
+      <hr/>
+      {%  for category in all_categories %}
+      <div class='text-center'>
+        <a href="/socialapp/{{category.id}}/cat_posts" class="w3-bar-item w3-button"> {{category.category_name}}</a>
+        <button  onclick="window.location.href='/socialapp/subscribe/{{category.id}}'" class="btn btn-primary"> Subscribe</button>
+       <hr/>
+      </div>
+      {% endfor %}
+      </div>
+    </div>
+  </div>
 </div>
+<!-- <script src="{% static 'jquery.min.js' %}"></script> -->
+<script src="{% static 'bootstrap.bundle.min.js' %}"></script>
+<script src="{%static 'handler.js' %}"> </script>
   </body>
-  <script src="{% static 'jquery.min.js' %}"></script>
-  <script src="{% static 'bootstrap.bundle.min.js' %}"></script>
 </html>

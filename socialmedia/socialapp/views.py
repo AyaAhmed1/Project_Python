@@ -31,7 +31,7 @@ def dashboard(request):
         all_cats = Category.objects.order_by('-id')
         context = {'allusers': all_users ,'allposts': all_posts,'allwords': words,'allcats': all_cats,"is_admin":request.user.is_superuser}
         return render(request,'pages/dashboard.html',context)
-    else : 
+    else :
         return HttpResponseRedirect("/socialapp/noaccess")
 
 
@@ -40,7 +40,7 @@ def allusers(request):
         all_users = User.objects.all()
         context = {'allusers': all_users,'bigboss':request.user.id,"is_admin":request.user.is_superuser}
         return render(request, 'pages/all_user.html', context)
-    else : 
+    else :
         return HttpResponseRedirect("/socialapp/noaccess")
 
 def block(request,usr_id):
@@ -53,7 +53,7 @@ def block(request,usr_id):
         user.is_active = 0
         user.save()
         return HttpResponseRedirect("/socialapp/allusers")
-    else : 
+    else :
         return HttpResponseRedirect("/socialapp/noaccess")
 
 
@@ -67,7 +67,7 @@ def unblock(request,usr_id):
         user.is_active = 1
         user.save()
         return HttpResponseRedirect("/socialapp/allusers")
-    else : 
+    else :
         return HttpResponseRedirect("/socialapp/noaccess")
 
 
@@ -82,7 +82,7 @@ def promote(request,usr_id):
         user.is_superuser = 1
         user.save()
         return HttpResponseRedirect("/socialapp/allusers")
-    else : 
+    else :
         return HttpResponseRedirect("/socialapp/noaccess")
 
 
@@ -94,7 +94,7 @@ def unpromote(request,usr_id):
         user.is_superuser = 0
         user.save()
         return HttpResponseRedirect("/socialapp/allusers")
-    else : 
+    else :
         return HttpResponseRedirect("/socialapp/noaccess")
 
 
@@ -116,7 +116,7 @@ def update (request,usr_id):
         context = {"form": user_form,"is_admin":request.user.is_superuser,"who":request.user.id,"id":user1.id,'normaluser':user1.is_superuser}
         return render(request, 'pages/update.html', context)
 
-   
+
 
 
 #posts part
@@ -209,7 +209,7 @@ def catdelete (request,cat_id):
         cat.delete()
         return HttpResponseRedirect("/socialapp/allcat")
     else :
-        return render_to_response('pages/noaccess.html')        
+        return render_to_response('pages/noaccess.html')
 
 
 #unwanted word
@@ -220,7 +220,7 @@ def allwords(request):
         context = {'allwords': words,"is_admin":request.user.is_superuser}
         return render(request, 'pages/allwords.html', context)
     else :
-        return render_to_response('pages/noaccess.html') 
+        return render_to_response('pages/noaccess.html')
 
 def newword (request):
     if request.user.is_superuser == 1 :
@@ -233,7 +233,7 @@ def newword (request):
         context = {"form": word_form,"is_admin":request.user.is_superuser}
         return render(request, 'pages/newword.html', context)
     else :
-        return render_to_response('pages/noaccess.html') 
+        return render_to_response('pages/noaccess.html')
 
 def wordupate(request,wrd_id):
     if request.user.is_superuser == 1 :
@@ -247,7 +247,7 @@ def wordupate(request,wrd_id):
         context = {"form": word_form,"is_admin":request.user.is_superuser}
         return render(request, 'pages/updatewrd.html', context)
     else :
-        return render_to_response('pages/noaccess.html') 
+        return render_to_response('pages/noaccess.html')
 
 
 
@@ -257,7 +257,7 @@ def worddelete(request,wrd_id):
         wrd.delete()
         return HttpResponseRedirect("/socialapp/allwords")
     else :
-        return render_to_response('pages/noaccess.html') 
+        return render_to_response('pages/noaccess.html')
 
 
 
@@ -267,19 +267,20 @@ def worddelete(request,wrd_id):
 def allCategories(request):
     all_categories =Category.objects.all()
     top_posts=Posts.objects.order_by('time')
-    context= {"all_categories":all_categories,"all_posts":top_posts}
+    context= {"all_categories":all_categories,"all_posts":top_posts,"is_admin":request.user.is_superuser}
     return render(request, "pages/all_cat.html" , context)
 
 def Category_posts(request,cat_id):
     all_Category_posts=Posts.objects.filter(cat_name_id=cat_id)
     cat_name=Category.objects.get(id=cat_id)
-    context={"all_category_posts" :all_Category_posts,"cat_name": cat_name}
+    all_categories =Category.objects.all()
+    context={"all_category_posts" :all_Category_posts,"cat_name": cat_name,"all_categories":all_categories ,"is_admin":request.user.is_superuser}
     return render (request,"pages/cat_posts.html",context)
 
 def Post_Page(request,post_id):
     post=Posts.objects.filter(id=post_id)
     all_categories =Category.objects.all()
-    context={"post_data" : post, "all_categories" :all_categories}
+    context={"post_data" : post, "all_categories" :all_categories,"is_admin":request.user.is_superuser}
     return render (request,"pages/post_page.html",context)
 
 def home(request):
@@ -287,7 +288,7 @@ def home(request):
     post_list = Posts.objects.order_by('-id')
     page = request.GET.get('page', 1)
 
-    paginator = Paginator(post_list, 5)
+    paginator = Paginator(post_list, 2)
     try:
         posts = paginator.page(page)
     except PageNotAnInteger:
@@ -419,4 +420,3 @@ def invalid_login(request):
 def logout(request):
     auth.logout(request)
     return render_to_response('logout.html')
-

@@ -34,6 +34,7 @@ urlpatterns = [
     url(r'^(?P<post_id>[0-9]+)/post_page/$', views.Post_Page),
     url(r'^home/$', views.home),
     url(r'^home/get_search/', views.get_search, name='get_search'),
+    url(r'^(?P<id>[0-9]+)/cat_posts/get_search/', views.get_search, name='get_search'),
     url(r'^(?P<keyword>[a-zA-Z]+)/filter/$', views.filter),
     #alaa
     url(r'^like/(?P<post_id>\d+)/$',views.like_post),
