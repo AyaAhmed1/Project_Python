@@ -27,6 +27,8 @@ urlpatterns = [
     url(r'(?P<wrd_id>[0-9]+)/wordupdate', views.wordupate),
     url(r'(?P<wrd_id>[0-9]+)/worddelete', views.worddelete),
     url(r'^noaccess/$', views.noaccess),
+    url(r'^blocked/$', views.blocked),
+
 
 
 
