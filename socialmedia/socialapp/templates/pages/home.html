@@ -32,8 +32,54 @@
     </style>
   </head>
 <body>
-  {% include 'pages/navbar.html' %}
 
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top">
+  <a class="navbar-brand" href="/socialapp/home">Home</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item active">
+        {% if is_admin == 1 %}
+
+        <a class="nav-link" href="/socialapp/dashboard">Dashboard <span class="sr-only">(current)</span></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/socialapp/allusers">Users</a>
+      </li>
+       <li class="nav-item">
+        <a class="nav-link" href="/socialapp/allposts">Posts</a>
+      </li>
+       <li class="nav-item">
+        <a class="nav-link" href="/socialapp/allcat">Categories</a>
+      </li>
+       <li class="nav-item">
+        <a class="nav-link" href="/socialapp/allwords">Unwanted word</a>
+      </li>
+       {% endif %}
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Dropdown
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+          <a class="dropdown-item" href="#">Action</a>
+          <a class="dropdown-item" href="#">Another action</a>
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item" href="/socialapp/accounts/logout">logout</a>
+        </div>
+      </li>
+     
+    </ul>
+      <input  id="search" class="form-control "  placeholder="Search" style="width:300px;margin-right: 5px">
+      <button id="btn_search" class="btn btn_warning">Search</button>
+  </div>
+</nav>
+
+
+<br>
+<br>
 <div class="container">
 <div class="row">
 <div class="col-9">
@@ -135,14 +181,21 @@
         <div class="w3-sidebar w3-bar-block border" align='right' style="width:20%" >
               <div class="text-center"><h3> Categories </h3> </div>
                   <hr/>
-                    {%  for category in all_categories %}
-                  <div class='text-center'>
-                      <a href="/socialapp/{{category.id}}/cat_posts" class="w3-bar-item w3-button"> {{category.category_name}}</a>
-                      <button id={{category.id}}  onclick="window.location.href='/socialapp/subscribe/{{category.id}}'" class="test btn btn-primary"> Subscribe</button>
-                        <hr/>
-                      </div>
-                        {% endfor %}
-                            <hr/>
+
+        {%  for category in cat_subscribtion_arr %}
+        
+  <div>
+    <a href="/socialapp/{{category.cat_id}}/cat_posts" class="w3-bar-item w3-button"> 
+
+    {{category.cat_name}}</a>
+{% if category.isSubscriped == True  %}
+<button id={{category.cat_id}} onclick="unsubscribe({{category.cat_id}})" class="btn btn-primary test">Unsubscribe</button>
+{% else %}
+<button id={{category.cat_id}} onclick="subscribe({{category.cat_id}})" class="btn btn-danger test">Subscribe</button>
+{% endif %}
+  </div>
+  {% endfor %}
+                  <hr/>
           </div>
 
         </div>
@@ -150,47 +203,19 @@
 </div>
 </div>
 <script src="{% static 'bootstrap.bundle.min.js' %}"></script>
-<script src="{%static 'aya.js' %}"> </script>
+<script src="{%static 'handler.js' %}"> </script>
 
-<script type="text/javascript">
-$(".btns").on("click",function(){
-  var id=($(this).attr('id'));
-  alert(id);
-  $(this).html("unsub");
+<script>
+  function subscribe(cat_id) {
+      window.location = "/socialapp/subscribe/" + cat_id
+    }
 
-  //  var url=$(this).attr('url');
-  //   console.log(url)
-  //   var status=$(this).attr('status');
-  //   var subdata=$(this).attr('value');
-  //
-  //   var unsubValue="UnSubscribe"
-  //   var subValue="Subscribe"
-  //
-  //   var subStatus=0;
-  //   var unsubStatus=1
-  //
-  //  if(subdata=="Subscribe"){
-  //  $(this).html(unsubValue);
-  //  $(this).trigger('change');
-  //   status=0
-  //   var path='/socialapp/unsubscribe/'+url+'/'+status;
-  //   }
-  //   else{
-  //  $(this).html(subValue);
-  //  $(this).trigger('change');
-  //  status=1
-  //  var path='/socialapp/subscribe/'+url+'/'+status;
-  //   }
-  // $.post({
-  //   type:'POST',
-  //   url:path,
-  //   success:function(url){
-  //      window.location.href =path;
-  //   }
-  // });
-});
+    function unsubscribe(cat_id) {
+      window.location = "/socialapp/unsubscribe/" + cat_id
+    }
+
 </script>
-{{is_admin}}
+
 </body>
 
 </html>

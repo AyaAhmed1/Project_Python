@@ -44,7 +44,7 @@
              {% if usr.is_superuser == 1 %}
              <td colspan="2"><h5 style="color: red">Admin</h5></td>
 
-        		<td><a href="/socialapp/{{usr.id}}/unpromote"><button class="btn btn-info" style="margin-bottom: 10px">unpromote</button></a></a></td>
+        		<td><a href="/socialapp/{{usr.id}}/unpromote"><button class="btn btn-info" style="margin-bottom: 10px">demote</button></a></a></td>
         	 {% endif %}
              {% if usr.is_superuser == 0 %}
                 {% if usr.is_active == 1 %}

@@ -1,0 +1,81 @@
+<!doctype html>
+<html >
+  <head>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <style>
+      body{
+      	margin-top:50px;
+      	background-color: #FFFFFF;
+      }
+      .comment-main{
+         background-color:#74A2D1;
+         box-shadow: 1px 2px 6px 2px #202111;
+         height: 500px;
+      }
+      .border{
+      border:1px solid black;
+      width:60%
+    }
+    .bar{
+      background-color:#0059FF;
+      font-display: white;
+    }
+    .field {
+    	margin-top:20px;
+    }
+    .label{
+    	font-style: unset;
+    	font-size: 20px;
+    }
+    .title {
+    	color:#0011AA;
+    	margin-top:10px;
+    }
+    .help{
+    	color:#0011AA;
+    }
+    .title {
+    	color:#0011AA;
+    	margin-top:10px;
+    }
+    </style>
+  </head>
+  <body>
+  	<div class="container">
+  		<div class="row">
+  			<div class="col-lg-5 col-lg-offset-3 col-12 comment-main rounded" align="center">
+  				{% load static %}
+    			{% if form.has_errors %}
+					<p>Your username or password don't mat</p>
+				{% endif %}
+				<h3 class="title is-size3">Register Form</h3>
+				<br/>
+				<form method="post">{% csrf_token%}
+					{% for field in form %}
+						<div class="field">
+							<label for="{{field.id_for_label}}" class="label">{{field.html_name}}</label>
+							{{field}}
+							{% if field.help_text %}
+								<p class="help">{{field.help_text}}</p>
+							{% endif %}
+							{% for error in field.errors %}
+								<p class="help is-danger">{{error}}</p>
+							{% endfor%}
+					   		
+					   	</div>	
+					{% endfor %} 
+					<button type="submit" class="button is-primary">save</button>  
+				</form>
+			</div>
+		</div>	
+	<div>	
+ 	<script src="{% static 'jquery.min.js'  %}"></script>
+    <script src="{% static 'js/jquery-3.1.1.js' %}"></script>
+    <script src="{% static 'bootstrap.bundle.min.js' %}"></script>
+
+	</body>	
+</html>
