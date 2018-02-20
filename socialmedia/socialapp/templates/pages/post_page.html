@@ -31,7 +31,7 @@
       }
       .title {
         font-size: 17px;
-        color:#0011AA;
+        color:Blue;
       }
       .border-bottom{
         font-size: 13px;
@@ -49,7 +49,6 @@
         margin: 20px;
         border-radius: 5px;
         border:2px;
-
       }
       .line{
         background-color:#FFFFFF;
@@ -60,40 +59,54 @@
         border-radius: 5px;
         border:1px solid #0011;
       }
+      .font_body{
+        font-size:30px;
+      }
+      .font_title{
+        font-size:35px;
+        color:Blue;
+      }
+      .tag{
+        font-size:22px;
+      }
+
+
     </style>
   </head>
   <body>
       {% include 'pages/navbar.html' %}
-
     <br/>
     <br/>
     <div align="center" class="container main col-lg-8 rounded pb-1 bg-light col-lg-offset-2" >
       {% load static %}
       {%  for post in post_data %}
       <div class="row title">
-        <h2> {{post.title }} </h2>
-      </div>
-      <div class="col-lg-4 pr-0">
         <p class="w-100 p-2 m-0"><span class="float-right"><i class="fa fa-clock-o mr-1" aria-hidden="true"></i>{{post.time}}</span></p>
       </div>
-      <div class="col-lg-4 pr-0">
-        tags:<a> #{{post.tag}} </a>
+      <div class="col-lg-4 pr-0 font_title">
+          <h2> {{post.title }} </h2>
       </div>
-      <div class="col-lg-4 pr-0">
-        {%  for category in all_categories %}
-          {% if post.cat_name_id == category.id %}
-            Category:<a> {{category.category_name}} </a>
-          {% endif %}
-        {% endfor %}
-      </div>
-      <div class="row title">
-          <img src="{% static ""%}img/{{ post.img }}" alt="photo"  width="700" height="350">
-      </div>
-      <br/>
-      <div class="col-lg-12 post_body">
-        <p> {{post.p_body}} </p>
-      </div>
-      <br/>
+<div class="col-12">
+  <img src="{% static ""%}img/{{ post.img }}" alt="photo" width="500"  class="img-fluid"  >
+</div>
+<br/>
+<div class="col-lg-12 post_body">
+  <p class="font_body"> {{post.p_body}} </p>
+  <br/>
+
+  <a class="tag"> Tags:{{post.tag}} </a>
+  <br/>
+  {%  for category in all_categories %}
+    {% if post.cat_name_id == category.id %}
+      <span class="tag"> Category: {{category.category_name}} </span>
+    {% endif %}
+  {% endfor %}
+
+</div>
+<br/>
+
+
+  {% if user.is_authenticated %}
       <div class="col-lg-8 pr-0 col-lg-offset-2">
                <button type="button" class="btn btn-primary" id="add_like" post_id="{{post.id}}">like</button>
                <label class="count_like">{{post.countlike}}</label>
@@ -101,17 +114,19 @@
                <label class="count_dislike">{{post.countdislike}}</label>
 
 
-     
+
         <input type="text" placeholder="Add Comment"  id="comment_value" width="250px">
         <button type="button" class="btn btn-primary" id="add_comment" post_id="{{post.id}}">Comment</button>
       </div>
+      {% endif%}
+
       <div class="title col-lg-12 post_body">
         <span>Comments</span>
       </div>
       <div id="comments_post" class="box_reply col-lg-10 col-lg-offset-1">
           {% load static %}
         {% for comment in allcomments %}
-          {% if comment.id_post_id == post.id %} 
+          {% if comment.id_post_id == post.id %}
             <div  class="comm comment col-lg-10 col-lg-offset-1">
               {% for user in allusers %}
                 {% if user.id == comment.c_user_id %}
@@ -119,39 +134,45 @@
                   <div class="col-lg-12 ">
                     <p class="w-100 p-2 m-0"><span class="float-right"><i class="fa fa-clock-o mr-1" aria-hidden="true"></i>{{comment.time}}</span></p>
                   </div>
-                  <div class="col-lg-12 pr-0"> 
+                  <div class="col-lg-12 pr-0">
                     <p>{{comment.c_body}}</p>
                   </div>
+
                   <div c="{{comment.id}}" class="col-lg-12">
-                    <input type="text" placeholder="Add Reply"  class="reply_value" comment_id="{{comment.id}}" width="250px"/>
-                    <button type="button" class="btn btn-primary" class="add_reply" comment_id="{{comment.id}}">Reply</button>
+              {% if request.user.is_authenticated %}
+                  <input type="text" placeholder="Add Reply"  class="reply_value" comment_id="{{comment.id}}" width="250px"/>
+                  <button type="button" class="btn btn-primary" class="add_reply" comment_id="{{comment.id}}">Reply</button>
+
+                  {% endif %}
                     <div class="title col-lg-3 post_body box_reply">
-                      <span class=" text-center">Reply</span>
+                      <span class=" text-center">Replies</span>
                     </div>
-                    {% if comment.R_check %} 
-                    <div id = "replays" class="all_replys col-lg-12 {{comment.id}}" class="border" rep_com_id="{{comment.id}}">
+                    {% if comment.R_check %}
+                    <div id = "replys" class="all_replys col-lg-12 {{comment.id}}" class="border" rep_com_id="{{comment.id}}">
                       {% for reply in all_replys %}
+                {% if reply.count != 0 %}
                       {% if reply.post_id_id == comment.id %}
                         <div class="rep"  >
                           {% for user in allusers %}
                             {% if user.id == reply.R_user_id %}
                               <h4>{{user.username}}</h4>
-                            {% endif %} 
+                            {% endif %}
                           {% endfor %}
                           <p>{{reply.time_reply}}</p>
                           <p>{{reply.R_body}}</p>
                         </div>
-                      {% endif %}  
+                    {% endif %}
+                    {% endif %}
                       {% endfor %}
-                    </div> 
+                    </div>
                     {% endif %}
                   </div>
-                {% endif %} 
+                {% endif %}
               {% endfor %}
-            </div> 
+            </div>
           {% endif %}
           <div class="line container-fluid" col-lg-12>
-          </div>  
+          </div>
          {% endfor %}
       </div>
       {% endfor %}
@@ -175,14 +196,12 @@
               {
                 $("#comment_value").val("");
                 $("#comments_post").prepend('<div class="comm comment col-lg-10 col-lg-offset-1"><h3 class="title comm col-lg-12 ">'+data.user_name+'</h3><p>'+data.time+'</p><p>'+data.comment+'</p><div c="'+data.com_id+'" class="col-lg-12"><input type="text" placeholder="Add Reply"  class="reply_value" comment_id="'+data.com_id+'" width="250px"><button type="button" class="btn btn-primary" class="add_reply" comment_id="'+data.com_id+'">Reply</button><div class="title col-lg-3 post_body box_reply"><span class=" text-center">Reply</span></div><divid = "replays" class="all_replys col-lg-12 {{comment.id}}" class="border" rep_com_id="{{comment.id}}"></div></div></div>');
-
                  console.log($("#comments_post").children());
                   act_btn();
               }
             }
           });
           });
-
           $('#add_like').on('click',function(e){
           var url_path=window.location.href;
           var post_id= $(this).attr("post_id");
@@ -191,35 +210,28 @@
           $.ajax({
             type:'POST',
             url: path,
-           
+
             success:function(data){
               if(data.success)
               {
                console.log(data.count)
-             
                $('.count_like').html(data.count)
                $('.count_dislike').html(data.countD)
-
               }
             }
           });
-
         });
-
             $('#add_dislike').on('click',function(e){
           var url_path=window.location.href;
           var path=url_path.replace("post_page","dislike");
           $.ajax({
             type:'POST',
             url: path,
-           
+
             success:function(data){
               if(data.success)
               {
                console.log(data.count)
-               
-              
-               
                if (data.count == 10)
                {
                  window.location.href = "/socialapp/home/"
@@ -232,8 +244,6 @@
             }
           });
           });
-
-
         act_btn();
         function act_btn(){
         $('button[comment_id]').on('click',function(e){
@@ -261,5 +271,10 @@
         }
       });
     </script>
+    <script src="{%static 'handler.js' %}"> </script>
+
+
  </body>
 </html>
+
+ 

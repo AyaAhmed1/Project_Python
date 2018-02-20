@@ -295,7 +295,7 @@ def home(request):
     post_list = Posts.objects.order_by('-id')
     page = request.GET.get('page', 1)
 
-    paginator = Paginator(post_list, 2)
+    paginator = Paginator(post_list, 5)
     try:
         posts = paginator.page(page)
     except PageNotAnInteger:
@@ -315,7 +315,7 @@ def home(request):
 
 def allCategories(request):
     all_categories =Category.objects.all()
-    top_posts=Posts.objects.order_by('time')
+    top_posts=Posts.objects.order_by('-id')
     context= {"all_categories":all_categories,"all_posts":top_posts,"is_admin":request.user.is_superuser}
     return render(request, "pages/all_cat.html" , context)
 
@@ -608,7 +608,7 @@ def signUp(request):
 def add_comment(request, post_id):
     if request.method == 'POST':
         com_body = request.POST.get("comment", None)
-        comment = Comment.objects.create(c_body=com_body, id_post_id=post_id, c_user_id=1, time=datetime.datetime.now())
+        comment = Comment.objects.create(c_body=com_body, id_post_id=post_id, c_user_id=request.user.id, time=datetime.datetime.now())
         words = Unwanted.objects.all()
         com_body = checkStr(words, com_body)
         # user = "yy"
@@ -622,7 +622,7 @@ def add_reply(request, post_id):
     if request.method == 'POST':
         reply_body = request.POST.get("reply", None)
         comm_id = request.POST.get("comment_id", None)
-        reply = Reply.objects.create(R_body=reply_body, post_id_id=comm_id, R_user_id=1,
+        reply = Reply.objects.create(R_body=reply_body, post_id_id=comm_id, R_user_id=request.user.id,
                                      time_reply=datetime.datetime.now())
         reply.save()
         comment = Comment.objects.get(id=comm_id)
