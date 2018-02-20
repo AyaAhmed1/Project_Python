@@ -39,10 +39,11 @@ class Wordform(forms.ModelForm):
         #model = Comment
         #fields=('id_post','c_user','c_body')
 
-class RegistrationForm(UserCreationForm):
+class RegistrationForm(forms.ModelForm):
 
-	username=forms.CharField(label='Username',max_length=30)
+	username=forms.CharField(label='user name',max_length=30)
 	email=forms.EmailField(label='Email')
+
 	class Meta:
 		model=User
 		fields=('username','email',)

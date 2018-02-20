@@ -188,7 +188,7 @@ def Post_Page(request,post_id):
     all_users=User.objects.all()
     all_categories =Category.objects.all()
     words=Unwanted.objects.all()
-    replys=Reply.objects.all()
+    replys=Reply.objects.order_by('-time_reply').all()
     replys=checkReply(words,replys)
     all_comments=check(words,all_comments)
     context={"post_data" : post, "all_categories" :all_categories,"allcomments":all_comments,"allusers":all_users,'all_replys':replys}
@@ -209,23 +209,23 @@ def home(request):
     context= {"all_categories":all_categories,"posts":posts}
     return render(request, "pages/home.html" , context)
 
-def signUp(request):
-	user_form=RegistrationForm()
-	if request.method=="POST":
-		user_form=RegistrationForm(request.POST)
-		if user_form.is_valid():
-			user_form.save()
-			return HttpResponseRedirect("/socialapp/home/")
-	context={"form":user_form}
-	return render(request,"user/new.html",context)
+def signUp(request)
+    user_form=RegistrationForm()
+    if request.method=="POST":
+        user_form=RegistrationForm(request.POST)
+        if user_form.is_valid():
+            user_form.save()
+            return HttpResponseRedirect("/socialapp/home/")
+    context={"form":user_form}
+    return render(request,"user/new.html",context)
 @csrf_exempt
 def add_comment(request,post_id):
     if request.method =='POST':
         com_body=request.POST.get("comment",None)
         comment=Comment.objects.create(c_body=com_body,id_post_id=post_id,c_user_id=1,time=datetime.datetime.now())
         words=Unwanted.objects.all()  
-        com_body=checkStr(words,com_body)   	   
-	user="yy"
+        com_body=checkStr(words,com_body)
+        user="gg"
         data={'success':True,'user_name':user,'time':datetime.datetime.now(),'comment':com_body,'com_id':comment.id}
         return JsonResponse(data)
 
@@ -240,8 +240,8 @@ def add_reply(request,post_id):
         comment.R_check=1
         comment.save()
         words=Unwanted.objects.all()
-        reply_body=checkStr(words,reply_body)      	   
-	user="kkk"
+        reply_body=checkStr(words,reply_body)
+        user="gg"
         data={'success':True,'user_name':user,'time':datetime.datetime.now(),'reply':reply_body}
         return JsonResponse(data)
 
