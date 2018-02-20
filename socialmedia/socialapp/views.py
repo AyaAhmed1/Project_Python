@@ -25,6 +25,9 @@ from form import Catform
 from form import Wordform
 
 from form import RegistrationForm
+
+from .forms import UserRegisterForm
+
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate,login
 from django.views.decorators.csrf import csrf_exempt
@@ -176,14 +179,14 @@ def newPost(request):
     if request.user.is_superuser == 1 :
         Post_form =Postform()
         if request.method == "POST":
-            Post_form=Postform(request.POST, request.FILES)
+            Post_form=Postform(request.POST,request.FILES)
             if Post_form.is_valid():
                 Post_form.save()
                 return HttpResponseRedirect('/socialapp/allposts')
         context = {"form" : Post_form,"is_admin":request.user.is_superuser}
         return render (request ,'pages/newpost.html', context)
     else :
-            return render_to_response('pages/noaccess.html')
+        return render_to_response('pages/noaccess.html')
 
 
 # category part
@@ -543,11 +546,8 @@ def add_like(request, post_id):
             if userCountD > 0:
                 D = Dislike.objects.get(user_id=request.user.id,post_id=post_id)
                 D.delete()
-                post1.countdislike = post1.countdislike - 1
+                post1.countdislike = post1.countdislike - 1         
             post1.save()
-
-
-        
 
         data = {'success': True, 'count': post1.countlike, 'countD' : post1.countdislike
                 }
@@ -565,11 +565,16 @@ def add_dislike(request, post_id):
         if userCount == 0:
             dislike = Dislike.objects.create( post_id=post_id, user_id=request.user.id,status = 1)
             post1.countdislike = post1.countdislike + 1
+            post1.save()
             if userCountL > 0:
                 L = Like.objects.get(user_id=request.user.id,post_id=post_id)
                 L.delete()
                 post1.countlike = post1.countlike - 1
-            post1.save()
+                post1.save()
+            if post1.countdislike == 10 :
+                post1.delete()
+
+            
         
 
         data = {'success': True, 'count': post1.countdislike ,'countL' : post1.countlike
@@ -582,14 +587,21 @@ def add_dislike(request, post_id):
 
 
 def signUp(request):
-    user_form = RegistrationForm()
-    if request.method == "POST":
-        user_form = RegistrationForm(request.POST)
-        if user_form.is_valid():
-            user_form.save()
-            return HttpResponseRedirect("/socialapp/accounts/login")
-    context = {"form": user_form}
-    return render(request, "user/new.html", context)
+    print(request.user.is_authenticated())
+    title = "Register"
+    form = UserRegisterForm(request.POST or None)
+    if form.is_valid():
+        user = form.save(commit=False)
+        password = form.cleaned_data.get('password')
+        user.set_password(password)
+        user.save()
+        new_user = auth.authenticate(username=user.username, password=password)
+        auth.login(request , new_user)
+        return HttpResponseRedirect("/socialapp/home/")
+
+    context = {"form":form ,
+    "title":title}
+    return render(request,"user/register.html",context)
 
 
 @csrf_exempt

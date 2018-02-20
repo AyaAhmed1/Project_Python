@@ -196,8 +196,10 @@
               if(data.success)
               {
                console.log(data.count)
+             
                $('.count_like').html(data.count)
                $('.count_dislike').html(data.countD)
+
               }
             }
           });
@@ -215,9 +217,17 @@
               if(data.success)
               {
                console.log(data.count)
+               
+              
+               
+               if (data.count == 10)
+               {
+                 window.location.href = "/socialapp/home/"
+               }
+               else{
                $('.count_dislike').html(data.count)
                $('.count_like').html(data.countL)
-
+                  }
               }
             }
           });

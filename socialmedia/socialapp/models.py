@@ -14,7 +14,7 @@ class Category(models.Model):
 
 
 class Posts(models.Model):
-    img = models.ImageField(upload_to='upload' ,default='1.jpeg', blank=True)
+    img = models.ImageField(upload_to='upload' , blank=True)
     p_body = models.TextField()
     title = models.CharField(max_length = 255)
     tag = models.CharField(max_length = 255)

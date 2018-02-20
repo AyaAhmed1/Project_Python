@@ -21,7 +21,6 @@ class Postform(forms.ModelForm):
         model = Posts
         fields=('img','title','p_body','tag','cat_name',)
         widgets = {
-            'img': forms.FileInput(attrs={'class': 'custom-file-upload'}),
             'title': forms.TextInput(attrs={'class': 'form-control'}),
             'p_body': forms.TextInput(attrs={'class': 'form-control post_body'}),
             'tag': forms.TextInput(attrs={'class': 'form-control'}),
