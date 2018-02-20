@@ -130,26 +130,67 @@
       </div>
 </div>
 <div class="col-1"></div>
-<div class="col-2" >
+<div class="col-2">
   <br/>
-  <div class="w3-sidebar w3-bar-block border " style="width:20%" align="right">
-  <div class="text-center"><h3> Categories </h3> </div>
-<hr/>
-  {%  for category in all_categories %}
+        <div class="w3-sidebar w3-bar-block border" align='right' style="width:20%" >
+              <div class="text-center"><h3> Categories </h3> </div>
+                  <hr/>
+                    {%  for category in all_categories %}
+                  <div class='text-center'>
+                      <a href="/socialapp/{{category.id}}/cat_posts" class="w3-bar-item w3-button"> {{category.category_name}}</a>
+                      <button id={{category.id}}  onclick="window.location.href='/socialapp/subscribe/{{category.id}}'" class="test btn btn-primary"> Subscribe</button>
+                        <hr/>
+                      </div>
+                        {% endfor %}
+                            <hr/>
+          </div>
 
-  <div class='text-center'>
-    <a href="/socialapp/{{category.id}}/cat_posts" class="w3-bar-item w3-button"> {{category.category_name}}</a>
-    <button  onclick="window.location.href='/socialapp/subscribe/{{category.id}}'" class="btn btn-primary"> Subscribe</button>
-
-    <hr/>
-  </div>
-  {% endfor %}
-  </div>
-</div>
+        </div>
+    </div>
 </div>
 </div>
 <script src="{% static 'bootstrap.bundle.min.js' %}"></script>
-<script src="{%static 'handler.js' %}"> </script>
+<script src="{%static 'aya.js' %}"> </script>
+
+<script type="text/javascript">
+$(".btns").on("click",function(){
+  var id=($(this).attr('id'));
+  alert(id);
+  $(this).html("unsub");
+
+  //  var url=$(this).attr('url');
+  //   console.log(url)
+  //   var status=$(this).attr('status');
+  //   var subdata=$(this).attr('value');
+  //
+  //   var unsubValue="UnSubscribe"
+  //   var subValue="Subscribe"
+  //
+  //   var subStatus=0;
+  //   var unsubStatus=1
+  //
+  //  if(subdata=="Subscribe"){
+  //  $(this).html(unsubValue);
+  //  $(this).trigger('change');
+  //   status=0
+  //   var path='/socialapp/unsubscribe/'+url+'/'+status;
+  //   }
+  //   else{
+  //  $(this).html(subValue);
+  //  $(this).trigger('change');
+  //  status=1
+  //  var path='/socialapp/subscribe/'+url+'/'+status;
+  //   }
+  // $.post({
+  //   type:'POST',
+  //   url:path,
+  //   success:function(url){
+  //      window.location.href =path;
+  //   }
+  // });
+});
+</script>
+{{is_admin}}
 </body>
 
 </html>

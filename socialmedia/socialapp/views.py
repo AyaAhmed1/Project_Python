@@ -12,16 +12,10 @@ from django.core.context_processors import csrf
 from django.shortcuts import render_to_response
 from django.contrib import auth
 from django.core import mail
-
-
-
 from form import Userform
 from form import Postform
 from form import Catform
 from form import Wordform
-
-
-
 
 def dashboard(request):
     if request.user.is_superuser == 1 :
@@ -33,7 +27,6 @@ def dashboard(request):
         return render(request,'pages/dashboard.html',context)
     else :
         return HttpResponseRedirect("/socialapp/noaccess")
-
 
 def allusers(request):
     if request.user.is_superuser == 1 :
@@ -101,9 +94,6 @@ def unpromote(request,usr_id):
 def noaccess(request):
     return render_to_response('pages/noaccess.html')
 
-
-
-
 def update (request,usr_id):
 
         user1=User.objects.get(id=usr_id)
@@ -116,10 +106,6 @@ def update (request,usr_id):
         context = {"form": user_form,"is_admin":request.user.is_superuser,"who":request.user.id,"id":user1.id,'normaluser':user1.is_superuser}
         return render(request, 'pages/update.html', context)
 
-
-
-
-#posts part
 
 def allposts(request):
     if request.user.is_superuser == 1 :
@@ -260,10 +246,6 @@ def worddelete(request,wrd_id):
         return render_to_response('pages/noaccess.html')
 
 
-
-
-
-
 def allCategories(request):
     all_categories =Category.objects.all()
     top_posts=Posts.objects.order_by('time')
@@ -271,7 +253,7 @@ def allCategories(request):
     return render(request, "pages/all_cat.html" , context)
 
 def Category_posts(request,cat_id):
-    all_Category_posts=Posts.objects.filter(cat_name_id=cat_id)
+    all_Category_posts=Posts.objects.filter(cat_name_id=cat_id).order_by('-id')
     cat_name=Category.objects.get(id=cat_id)
     all_categories =Category.objects.all()
     context={"all_category_posts" :all_Category_posts,"cat_name": cat_name,"all_categories":all_categories ,"is_admin":request.user.is_superuser}
@@ -319,10 +301,10 @@ def get_search(request):
     return HttpResponse(data, mimetype)
 
 def filter(request,keyword):
-    Posts_match_title=Posts.objects.filter(title__contains=keyword)
-    Posts_match_tag=Posts.objects.filter(tag__contains=keyword)
+    Posts_match_title=Posts.objects.filter(title__contains=keyword).order_by('-id')
+    Posts_match_tag=Posts.objects.filter(tag__contains=keyword).order_by('-id')
     all_categories =Category.objects.all()
-    context={"Posts_match_title" :Posts_match_title ,"Posts_match_tag":Posts_match_tag,"all_categories":all_categories}
+    context={"Posts_match_title" :Posts_match_title ,"Posts_match_tag":Posts_match_tag,"all_categories":all_categories,"is_admin":request.user.is_superuser}
     return render (request,"pages/filter.html",context)
 
 #alaa
@@ -412,10 +394,33 @@ def loggedin(request):
                               {'full_name': request.user.username}
                               )
 
+def subscribe_category(request,cat_id,status):
+    user=request.user
+    category = Category.objects.get(id = cat_id)
+    category.users.add(user)
+
+    connection = mail.get_connection()
+    connection.open()
+    msgbodytext = "Hello - " + user.username + "- you have subscribed successfully in - " + category.category_name +" -  SocialApp"
+    sendEmail = mail.EmailMessage(
+    'Verification',
+    msgbodytext,
+    'alaametwally48@gmail.com',
+    [user.email],
+    connection=connection,
+    )
+    sendEmail.send()
+    connection.close()
+    return HttpResponseRedirect("/socialapp/home/")
+
+def unsubscribe_category(request, cat_id,status):
+    category = Category.objects.get(id = cat_id)
+    user = request.user
+    category.users.remove(user)
+    return HttpResponseRedirect("/socialapp/home/")
 
 def invalid_login(request):
     return render_to_response('invalid_login.html')
-
 
 def logout(request):
     auth.logout(request)
