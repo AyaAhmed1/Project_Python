@@ -17,12 +17,14 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
                 ('category_name', models.CharField(max_length=50)),
+                ('users', models.ManyToManyField(to=settings.AUTH_USER_MODEL, null=True, blank=True)),
             ],
         ),
         migrations.CreateModel(
             name='CateUsr',
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
+                ('status', models.BooleanField(default=True)),
                 ('categ', models.ForeignKey(to='socialapp.Category')),
                 ('user', models.ForeignKey(to=settings.AUTH_USER_MODEL)),
             ],
@@ -32,6 +34,8 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
                 ('c_body', models.CharField(max_length=255)),
+                ('time', models.DateTimeField()),
+                ('R_check', models.IntegerField(default=0)),
                 ('c_user', models.ForeignKey(to=settings.AUTH_USER_MODEL)),
             ],
         ),
@@ -39,13 +43,14 @@ class Migration(migrations.Migration):
             name='Posts',
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
-                ('img', models.ImageField(default=b'1.jpeg', upload_to=b'', blank=True)),
-                ('p_body', models.CharField(max_length=255)),
-                ('like', models.IntegerField(default=0)),
-                ('dislike', models.IntegerField(default=0)),
-                ('title', models.CharField(max_length=50)),
-                ('tag', models.CharField(max_length=50)),
+                ('img', models.ImageField(default=b'1.jpeg', upload_to=b'upload', blank=True)),
+                ('p_body', models.TextField()),
+                ('title', models.CharField(max_length=255)),
+                ('tag', models.CharField(max_length=255)),
+                ('time', models.DateTimeField(auto_now_add=True)),
                 ('cat_name', models.ForeignKey(to='socialapp.Category')),
+                ('dislike', models.ManyToManyField(related_name='dislike', null=True, to=settings.AUTH_USER_MODEL, blank=True)),
+                ('like', models.ManyToManyField(related_name='like', null=True, to=settings.AUTH_USER_MODEL, blank=True)),
             ],
         ),
         migrations.CreateModel(
@@ -53,6 +58,7 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
                 ('R_body', models.CharField(max_length=255)),
+                ('time_reply', models.DateTimeField()),
                 ('R_user', models.ForeignKey(to=settings.AUTH_USER_MODEL)),
                 ('post_id', models.ForeignKey(to='socialapp.Comment')),
             ],

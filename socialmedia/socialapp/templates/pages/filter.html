@@ -5,6 +5,7 @@
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
     <link rel="stylesheet" href="bootstrap.min.css">
     {% load static %}
         <link rel="stylesheet" href="{%static 'bootstrap.min.css' %}">
@@ -19,50 +20,51 @@
     </style>
   </head>
 <body>
+    {% include 'pages/navbar.html' %}
+    <div class='container'>
   <div  class="row">
-      <div class="col-2"> </div>
+
   {% load static %}
-  <div class=" col-8 text-center">
-        <h2>  Matched Title Posts </h2>
+  <div class=" col-9 text-center">
+    <br>
+    <div class='border'>
+        <h1>  Matched Title Posts </h1>
           <br/>
         {% if Posts_match_title.count == 0 %}
-            <h3>No matched title found </h3>
+            <h4>No matched title found </h4>
             <br/>
         {% else %}
     {%  for posts in Posts_match_title %}
-
-  <div class="border">
+          <div class='border'>
     <h2> {{posts.title }} </h2>
-    <a href="/socialapp/{{posts.id}}/post_page"> <img src="{% static ""%}img/{{ posts.img }}" alt="photo" width=300></a>
-
+    <a href="/socialapp/{{posts.id}}/post_page"> <img src="{% static ""%}img/{{ posts.img }}"  class="img-fluid" alt="photo" width=400></a>
     <br/>
     <p> {{posts.p_body}} </p>
     <span> tags:{{posts.tag}} </span>
-  <br/>
-
-
-  {%  for category in all_categories %}
+    <br/>
+    {%  for category in all_categories %}
     {% if posts.cat_name_id == category.id %}
-
-
   <span> Category:{{category.category_name}} </span>
    {% endif %}
    {% endfor %}
-
-  </div>
-  <br/>
+      </div>
     {% endfor %}
     {% endif %}
-<h2> Matched Tags </h2>
+    </div>
+
+  <br/>
+  <br/>
+  <div class=border>
+<h1> Matched Tags </h1>
 {% if Posts_match_tag.count == 0 %}
-        <h3>No matched tags found </h3>
+        <h4>No matched tags found </h4>
         <br/>
     {% else %}
 
 {%  for posts in Posts_match_tag %}
 <div class="border">
 <h2> {{posts.title }} </h2>
-<a href="/socialapp/{{posts.id}}/post_page"> <img src="{% static ""%}img/{{ posts.img }}" alt="photo" width=300></a>
+<a href="/socialapp/{{posts.id}}/post_page"> <img src="{% static ""%}img/{{ posts.img }}" class="img-fluid" alt="photo" width=400></a>
 
 <br/>
 <p> {{posts.p_body}} </p>
@@ -79,15 +81,34 @@
 <br/>
 {% endfor %}
 {% endif %}
+    </div>
+</div>
+    <div class="col-1"></div>
+    <div class="col-2" >
+      <br/>
+      <div class="w3-sidebar w3-bar-block border " style="width:20%" align="right">
+      <div class="text-center"><h3> Categories </h3> </div>
+    <hr/>
+      {%  for category in all_categories %}
 
+      <div class='text-center'>
+        <a href="/socialapp/{{category.id}}/cat_posts" class="w3-bar-item w3-button"> {{category.category_name}}</a>
+        <button  onclick="window.location.href='/socialapp/subscribe/{{category.id}}'" class="btn btn-primary"> Subscribe</button>
 
-
-
-
+        <hr/>
       </div>
-  <div class="col-2"> </div>
+      {% endfor %}
+      </div>
+    </div>
   </div>
-    </body>
-    <script src="{% static 'jquery.min.js' %}"></script>
+</div>
+
+<script src="{% static 'jquery.min.js' %}"></script>
     <script src="{% static 'bootstrap.bundle.min.js' %}"></script>
+            <script src="{% static 'handler.js' %}"></script>
+
+    </body>
+
+
+
   </html>

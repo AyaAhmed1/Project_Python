@@ -1,78 +1,256 @@
+{% load static %}
 <!doctype html>
 <html >
   <head>
- <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-    <!-- jQuery !-->
-            <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"> </script>
-    <!-- jQuery UI !-->
-    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
-
-    <!-- <style>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap.min.css' %}">
+  <link rel="stylesheet" type="text/css" href="{% static 'css/font-awesome.min.css' %}">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <style>
       .border{
-      border:1px solid black;
-      width:60%
-    }
-    .bar{
-      background-color:#0059FF;
-      font-display: white;
-    }
+        border:1px solid black;
+        width:60%
+      }
+      .bar{
+        background-color:#0059FF;
+        font-display: white;
+      }
+      body, .comment{
+       background-color:#0011;
+      }
+      .main{
+       background-color:#FFFFFF;
+       box-shadow: 1px 2px 6px 2px #202111;
+       border-radius: 5px;
+      }
+      .box_reply{
+       background-color:#FFFFFF;
+       border-radius: 5px;
+      }
+      .title {
+        font-size: 17px;
+        color:#0011AA;
+      }
+      .border-bottom{
+        font-size: 13px;
+        border-bottom:1px solid #d3d3d3;
+      }
+      .post_body{
+        border:1px solid #0011;
+        margin: 6px 6px 6px 6px;
+        border-radius: 5px;
+      }
+      .com{
+        font-size: 15px;
+        display: block;
+        float: left;
+        margin: 20px;
+        border-radius: 5px;
+        border:2px;
 
-    </style> -->
-    {% load static %}
-    <link rel="stylesheet" href="{%static 'bootstrap.min.css' %}">
+      }
+      .line{
+        background-color:#FFFFFF;
+        width: 3px;
+      }
+      .rep{
+        background-color:#FFFFFF;
+        border-radius: 5px;
+        border:1px solid #0011;
+      }
+    </style>
   </head>
-<body>
-
-    {% include 'pages/navbar.html' %}
-
-
-<br/>
-<br/>
-
-  <div align="center" class="row">
-    <div class="col-1"> </div>
-  {% load static %}
-    {%  for post in post_data %}
-    <div class="col-10">
-    <div class="border text-center">
-
-    <h2> {{post.title }} </h2>
-      <img src="{% static ""%}img/{{ post.img }}" alt="photo" width=300>
+  <body>
+      {% include 'pages/navbar.html' %}
 
     <br/>
-    <p> {{post.p_body}} </p>
-    <span> tags:#{{post.tag}} </span>
-  <br/>
-  {%  for category in all_categories %}
-    {% if post.cat_name_id == category.id %}
-    <span> Category:{{category.category_name}} </span>
-    {% endif %}
-    {% endfor %}
     <br/>
+    <div align="center" class="container main col-lg-8 rounded pb-1 bg-light col-lg-offset-2" >
+      {% load static %}
+      {%  for post in post_data %}
+      <div class="row title">
+        <h2> {{post.title }} </h2>
+      </div>
+      <div class="col-lg-4 pr-0">
+        <p class="w-100 p-2 m-0"><span class="float-right"><i class="fa fa-clock-o mr-1" aria-hidden="true"></i>{{post.time}}</span></p>
+      </div>
+      <div class="col-lg-4 pr-0">
+        tags:<a> #{{post.tag}} </a>
+      </div>
+      <div class="col-lg-4 pr-0">
+        {%  for category in all_categories %}
+          {% if post.cat_name_id == category.id %}
+            Category:<a> {{category.category_name}} </a>
+          {% endif %}
+        {% endfor %}
+      </div>
+      <div class="row title">
+          <img src="{% static ""%}img/{{ post.img }}" alt="photo"  width="700" height="350">
+      </div>
+      <br/>
+      <div class="col-lg-12 post_body">
+        <p> {{post.p_body}} </p>
+      </div>
+      <br/>
+      <div class="col-lg-8 pr-0 col-lg-offset-2">
+               <button type="button" class="btn btn-primary" id="add_like" post_id="{{post.id}}">like</button>
+               <label class="count_like">{{post.countlike}}</label>
+               <button type="button" class="btn btn-primary" id="add_dislike" post_id="{{post.id}}">dislike</button>
+               <label class="count_dislike">{{post.countdislike}}</label>
 
-    </div>
-    <div class="border text-left">
-      <button type="button" class="btn btn-default btn-sm">
-       <span class="glyphicon glyphicon-thumbs-up"></span> Like
-     </button>
-        <label>{{post.like}} </label>
-        <button type="button" class="btn btn-default btn-sm">
-         <span class="glyphicon glyphicon-thumbs-down"></span> Unlike
-       </button>
-      <label>{{post.dislike}} </label>
-      <div align="right">
-    <input type="text" placeholder="Add Comment"  id="comment_value">
-    <button type="button" class="btn btn-primary" id="add_comment">Comment</button>
-  </div>
-    </div>
-    <div >Comments </div>
-</div>
- {% endfor %}
 
-    </body>
-    <script src="{% static 'bootstrap.bundle.min.js' %}"></script>
-  </html>
+     
+        <input type="text" placeholder="Add Comment"  id="comment_value" width="250px">
+        <button type="button" class="btn btn-primary" id="add_comment" post_id="{{post.id}}">Comment</button>
+      </div>
+      <div class="title col-lg-12 post_body">
+        <span>Comments</span>
+      </div>
+      <div id="comments_post" class="box_reply col-lg-10 col-lg-offset-1">
+        {% load static %}
+        {% for comment in allcomments %}
+          {% if comment.id_post_id == post.id %}
+            <div  class="comm comment col-lg-10 col-lg-offset-1 ">
+              {% for user in allusers %}
+                {% if user.id == comment.c_user_id %}
+                  <h3 class="title comm col-lg-12 ">{{user.username}}</h3>
+                  <div class="col-lg-12 ">
+                    <p class="w-100 p-2 m-0"><span class="float-right"><i class="fa fa-clock-o mr-1" aria-hidden="true"></i>{{comment.time}}</span></p>
+                  </div>
+                  <div class="col-lg-12 pr-0">
+                    <p>{{comment.c_body}}</p>
+                  </div>
+                  {% if comment.R_check %}
+                    <div class="title col-lg-4 col-lg-offset-4 post_body box_reply">
+                      <span class=" text-center">Reply</span>
+                    </div>
+                    <div class="all_replys col-lg-12" class="border" rep_com_id="{{comment.id}}">
+                      {% for reply in all_replys %}
+                        {% if reply.post_id_id == comment.id %}
+                          <div class="rep"  >
+                            {% for user in allusers %}
+                              {% if user.id == reply.R_user_id %}
+                                <h4>{{user.username}}</h4>
+                              {% endif %}
+                            {% endfor %}
+                            <p>{{reply.time_reply}}</p>
+                            <p>{{reply.R_body}}</p>
+                          </div>
+                        {% endif %}
+                      {% endfor %}
+                    </div>
+                  {% else %}
+                    <div c="{{comment.id}}" class="col-lg-12">
+                      <input type="text" placeholder="Add Reply"  class="reply_value" comment_id="{{comment.id}}" width="250px"/>
+                      <button type="button" class="btn btn-primary" class="add_reply" comment_id="{{comment.id}}">Reply</button>
+                    </div>
+                  {% endif %}
+                {% endif %}
+              {% endfor %}
+            </div>
+          {% endif %}
+          <br/><br/>
+          <div class="line container-fluid">
+          </div>
+         {% endfor %}
+      </div>
+      {% endfor %}
+    </div>
+    <script src="{% static 'js/jquery.min.js'  %}"></script>
+    <script src="{% static 'js/jquery-3.1.1.js' %}"></script>
+    <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
+    <script type="text/javascript">
+      $(document).ready(function(){
+        $('#add_comment').on('click',function(e){
+          var url_path=window.location.href;
+          var post_id= $(this).attr("post_id");
+          var path=url_path.replace("post_page","comment");
+          var comment_data =$("#comment_value").val();
+          $.ajax({
+            type:'POST',
+            url: path,
+            data:{'comment':comment_data},
+            success:function(data){
+              if(data.success)
+              {
+                $("#comment_value").val(" ");
+                $("#comments_post").prepend('<div class="comm comment col-lg-10 col-lg-offset-1"><h3 class="title comm col-lg-12 ">'+data.user_name+'</h3><p>'+data.time+'</p><p>'+data.comment+'</p><div c="'+data.com_id+'" class="col-lg-12"><input type="text" placeholder="Add Reply"  class="reply_value" comment_id="'+data.com_id+'" width="250px"><button type="button" class="btn btn-primary" class="add_reply" comment_id="'+data.com_id+'">Reply</button></div></div>');
+                 console.log($("#comments_post").children());
+                  act_btn();
+              }
+            }
+          });
+          });
+
+          $('#add_like').on('click',function(e){
+          var url_path=window.location.href;
+          var post_id= $(this).attr("post_id");
+          var path=url_path.replace("post_page","like");
+          //var comment_data =$("#comment_value").val();
+          $.ajax({
+            type:'POST',
+            url: path,
+           
+            success:function(data){
+              if(data.success)
+              {
+               console.log(data.count)
+               $('.count_like').html(data.count)
+               $('.count_dislike').html(data.countD)
+              }
+            }
+          });
+
+        });
+
+            $('#add_dislike').on('click',function(e){
+          var url_path=window.location.href;
+          var path=url_path.replace("post_page","dislike");
+          $.ajax({
+            type:'POST',
+            url: path,
+           
+            success:function(data){
+              if(data.success)
+              {
+               console.log(data.count)
+               $('.count_dislike').html(data.count)
+               $('.count_like').html(data.countL)
+
+              }
+            }
+          });
+          });
+
+
+        act_btn();
+        function act_btn(){
+        $('button[comment_id]').on('click',function(e){
+          var parent=$(this).parent();
+          var reply_data =$(this).parent().children().eq(0).val();
+          console.log(reply_data);
+          var comment_id=$(this).attr("comment_id");
+          console.log(comment_id);
+          var url_path=window.location.href;
+          var path=url_path.replace("post_page","reply");
+          $.ajax({
+            type:'POST',
+            url: path,
+            data:{'reply':reply_data,'comment_id':comment_id},
+            success:function(data){
+              if(data.success)
+              {
+                parent.children().eq(0).val(" ");
+                parent.children().remove();
+                parent.prepend('<div class="title col-lg-4 col-lg-offset-4 post_body box_reply"><span class=" text-center">Reply</span></div><div class="rep col-lg-12"><h4>'+data.user_name+'</h4><p>'+data.time+'</p><p>'+data.reply+'</p></div>');
+              }
+            }
+          });
+        });
+        }
+      });
+    </script>
+ </body>
+</html>

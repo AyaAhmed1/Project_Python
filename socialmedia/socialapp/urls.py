@@ -34,7 +34,7 @@ urlpatterns = [
     url(r'^(?P<post_id>[0-9]+)/post_page/$', views.Post_Page),
     url(r'^home/$', views.home),
     url(r'^home/get_search/', views.get_search, name='get_search'),
-    url(r'^(?P<keyword>[a-zA-Z]+)/filter/$', views.filter),
+    url(r'^(?P<keyword>[a-zA-Z0-9]+)/filter/$', views.filter),
     #alaa
     url(r'^like/(?P<post_id>\d+)/$',views.like_post),
 	url(r'^dislike/(?P<post_id>\d+)/$',views.dislike_post),
@@ -47,4 +47,16 @@ urlpatterns = [
 	url(r'^accounts/login/$',views.login),
 	url(r'^accounts/invalid/$',views.invalid_login),
 
+    url(r'^unsubscribe/(?P<cat_id>[0-9]+)/$', views.unsubscribe_category), 
+    url(r'^subscribe/(?P<cat_id>[0-9]+)/$', views.subscribe_category),
+
+
+  #ghada
+    url(r'^signup/$',views.signUp),
+    url(r'^(?P<post_id>[0-9]+)/comment/$',views.add_comment),
+    url(r'^(?P<post_id>[0-9]+)/reply/$',views.add_reply),
+
+
+    url(r'^(?P<post_id>[0-9]+)/like/$',views.add_like),
+    url(r'^(?P<post_id>[0-9]+)/dislike/$',views.add_dislike),
 ]
