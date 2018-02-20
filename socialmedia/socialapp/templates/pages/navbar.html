@@ -7,6 +7,7 @@
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
     <ul class="navbar-nav mr-auto">
       <li class="nav-item active">
+
         {% if is_admin == 1 %}
 
         <a class="nav-link" href="/socialapp/dashboard">Dashboard <span class="sr-only">(current)</span></a>
@@ -31,9 +32,19 @@
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
           <a class="dropdown-item" href="#">Action</a>
           <a class="dropdown-item" href="#">Another action</a>
+          {% if user.is_authenticated %}
           <div class="dropdown-divider"></div>
           <a class="dropdown-item" href="/socialapp/accounts/logout">logout</a>
+          {% else %}
+           <a class="dropdown-item" href="/socialapp/accounts/login">Login</a>
+          <a class="dropdown-item" href="/socialapp/signup" >Register</a>
+          {% endif %}
+          
         </div>
+      </li>
+       </li>
+       
+        <h6 class="nav-link" href="/socialapp/allwords" style="margin-left: 200px ;color:white">{{full_name}}</a></h6>
       </li>
      
     </ul>

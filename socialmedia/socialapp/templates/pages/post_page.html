@@ -109,51 +109,49 @@
         <span>Comments</span>
       </div>
       <div id="comments_post" class="box_reply col-lg-10 col-lg-offset-1">
-        {% load static %}
+          {% load static %}
         {% for comment in allcomments %}
-          {% if comment.id_post_id == post.id %}
-            <div  class="comm comment col-lg-10 col-lg-offset-1 ">
+          {% if comment.id_post_id == post.id %} 
+            <div  class="comm comment col-lg-10 col-lg-offset-1">
               {% for user in allusers %}
                 {% if user.id == comment.c_user_id %}
                   <h3 class="title comm col-lg-12 ">{{user.username}}</h3>
                   <div class="col-lg-12 ">
                     <p class="w-100 p-2 m-0"><span class="float-right"><i class="fa fa-clock-o mr-1" aria-hidden="true"></i>{{comment.time}}</span></p>
                   </div>
-                  <div class="col-lg-12 pr-0">
+                  <div class="col-lg-12 pr-0"> 
                     <p>{{comment.c_body}}</p>
                   </div>
-                  {% if comment.R_check %}
-                    <div class="title col-lg-4 col-lg-offset-4 post_body box_reply">
+                  <div c="{{comment.id}}" class="col-lg-12">
+                    <input type="text" placeholder="Add Reply"  class="reply_value" comment_id="{{comment.id}}" width="250px"/>
+                    <button type="button" class="btn btn-primary" class="add_reply" comment_id="{{comment.id}}">Reply</button>
+                    <div class="title col-lg-3 post_body box_reply">
                       <span class=" text-center">Reply</span>
                     </div>
-                    <div class="all_replys col-lg-12" class="border" rep_com_id="{{comment.id}}">
+                    {% if comment.R_check %} 
+                    <div id = "replays" class="all_replys col-lg-12 {{comment.id}}" class="border" rep_com_id="{{comment.id}}">
                       {% for reply in all_replys %}
-                        {% if reply.post_id_id == comment.id %}
-                          <div class="rep"  >
-                            {% for user in allusers %}
-                              {% if user.id == reply.R_user_id %}
-                                <h4>{{user.username}}</h4>
-                              {% endif %}
-                            {% endfor %}
-                            <p>{{reply.time_reply}}</p>
-                            <p>{{reply.R_body}}</p>
-                          </div>
-                        {% endif %}
+                      {% if reply.post_id_id == comment.id %}
+                        <div class="rep"  >
+                          {% for user in allusers %}
+                            {% if user.id == reply.R_user_id %}
+                              <h4>{{user.username}}</h4>
+                            {% endif %} 
+                          {% endfor %}
+                          <p>{{reply.time_reply}}</p>
+                          <p>{{reply.R_body}}</p>
+                        </div>
+                      {% endif %}  
                       {% endfor %}
-                    </div>
-                  {% else %}
-                    <div c="{{comment.id}}" class="col-lg-12">
-                      <input type="text" placeholder="Add Reply"  class="reply_value" comment_id="{{comment.id}}" width="250px"/>
-                      <button type="button" class="btn btn-primary" class="add_reply" comment_id="{{comment.id}}">Reply</button>
-                    </div>
-                  {% endif %}
-                {% endif %}
+                    </div> 
+                    {% endif %}
+                  </div>
+                {% endif %} 
               {% endfor %}
-            </div>
+            </div> 
           {% endif %}
-          <br/><br/>
-          <div class="line container-fluid">
-          </div>
+          <div class="line container-fluid" col-lg-12>
+          </div>  
          {% endfor %}
       </div>
       {% endfor %}
@@ -175,8 +173,9 @@
             success:function(data){
               if(data.success)
               {
-                $("#comment_value").val(" ");
-                $("#comments_post").prepend('<div class="comm comment col-lg-10 col-lg-offset-1"><h3 class="title comm col-lg-12 ">'+data.user_name+'</h3><p>'+data.time+'</p><p>'+data.comment+'</p><div c="'+data.com_id+'" class="col-lg-12"><input type="text" placeholder="Add Reply"  class="reply_value" comment_id="'+data.com_id+'" width="250px"><button type="button" class="btn btn-primary" class="add_reply" comment_id="'+data.com_id+'">Reply</button></div></div>');
+                $("#comment_value").val("");
+                $("#comments_post").prepend('<div class="comm comment col-lg-10 col-lg-offset-1"><h3 class="title comm col-lg-12 ">'+data.user_name+'</h3><p>'+data.time+'</p><p>'+data.comment+'</p><div c="'+data.com_id+'" class="col-lg-12"><input type="text" placeholder="Add Reply"  class="reply_value" comment_id="'+data.com_id+'" width="250px"><button type="button" class="btn btn-primary" class="add_reply" comment_id="'+data.com_id+'">Reply</button><div class="title col-lg-3 post_body box_reply"><span class=" text-center">Reply</span></div><divid = "replays" class="all_replys col-lg-12 {{comment.id}}" class="border" rep_com_id="{{comment.id}}"></div></div></div>');
+
                  console.log($("#comments_post").children());
                   act_btn();
               }
@@ -242,9 +241,9 @@
             success:function(data){
               if(data.success)
               {
-                parent.children().eq(0).val(" ");
-                parent.children().remove();
-                parent.prepend('<div class="title col-lg-4 col-lg-offset-4 post_body box_reply"><span class=" text-center">Reply</span></div><div class="rep col-lg-12"><h4>'+data.user_name+'</h4><p>'+data.time+'</p><p>'+data.reply+'</p></div>');
+                parent.children().eq(0).val("");
+                // parent.children().remove();
+                parent.children().eq(3).prepend('<div class="rep col-lg-12"><h4>'+data.user_name+'</h4><p>'+data.time+'</p><p>'+data.reply+'</p></div>');
               }
             }
           });

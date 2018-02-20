@@ -281,29 +281,28 @@ def worddelete(request,wrd_id):
 
 def home(request):
     user=request.user
-    if user.is_active==1:
-        all_categories =Category.objects.all()
-        cat_subscribtion_arr=[]
-        for catObj in all_categories:
-            isSub=isSubscriped(catObj.id,user.id)
-            subDic= {'cat_id':catObj.id ,"cat_name":catObj.category_name ,'isSubscriped': isSub}
-            cat_subscribtion_arr.append(subDic)
 
-        post_list = Posts.objects.order_by('-id')
-        page = request.GET.get('page', 1)
+    all_categories =Category.objects.all()
+    cat_subscribtion_arr=[]
+    for catObj in all_categories:
+        isSub=isSubscriped(catObj.id,user.id)
+        subDic= {'cat_id':catObj.id ,"cat_name":catObj.category_name ,'isSubscriped': isSub}
+        cat_subscribtion_arr.append(subDic)
 
-        paginator = Paginator(post_list, 2)
-        try:
-            posts = paginator.page(page)
-        except PageNotAnInteger:
-            posts = paginator.page(1)
-        except EmptyPage:
-            posts = paginator.page(paginator.num_pages)
-        subCategory=CateUsr.objects.filter(user_id=user.id)
-        context= {"all_categories":all_categories,"posts":posts,"is_admin":request.user.is_superuser,"full_name":request.user.username,"subCategory":subCategory,"cat_subscribtion_arr":cat_subscribtion_arr}
-        return render(request, "pages/home.html" , context)
-    else :
-        return render_to_response('pages/blocked.html')
+    post_list = Posts.objects.order_by('-id')
+    page = request.GET.get('page', 1)
+
+    paginator = Paginator(post_list, 2)
+    try:
+        posts = paginator.page(page)
+    except PageNotAnInteger:
+        posts = paginator.page(1)
+    except EmptyPage:
+        posts = paginator.page(paginator.num_pages)
+    subCategory=CateUsr.objects.filter(user_id=user.id)
+    context= {"all_categories":all_categories,"posts":posts,"is_admin":request.user.is_superuser,"full_name":request.user.username,"subCategory":subCategory,"cat_subscribtion_arr":cat_subscribtion_arr}
+    return render(request, "pages/home.html" , context)
+  
 
 
 
@@ -339,7 +338,7 @@ def Post_Page(request, post_id):
     all_users = User.objects.all()
     all_categories = Category.objects.all()
     words = Unwanted.objects.all()
-    replys = Reply.objects.all()
+    replys = Reply.objects.order_by("-time_reply").all()
     replys = checkReply(words, replys)
     all_comments = check(words, all_comments)
     context = {"post_data": post, "all_categories": all_categories, "allcomments": all_comments, "allusers": all_users,
@@ -502,6 +501,11 @@ def auth_view(request):
     if user is not None:
         auth.login(request, user)
         request.session.user = user
+        if user.is_active == 0 : 
+            auth.logout(request)
+            return render_to_response('pages/blocked.html')
+
+
         return HttpResponseRedirect('/socialapp/home/')
     else:
         HttpResponse(user)
@@ -583,7 +587,7 @@ def signUp(request):
         user_form = RegistrationForm(request.POST)
         if user_form.is_valid():
             user_form.save()
-            return HttpResponseRedirect("/socialapp/home/")
+            return HttpResponseRedirect("/socialapp/accounts/login")
     context = {"form": user_form}
     return render(request, "user/new.html", context)
 
