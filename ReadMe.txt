@@ -54,5 +54,9 @@ Other Tasks:
 4- sidebar
 5- body
 6- registration
-
+--------------------------------------------------
+Ahmed Kamel ---> Admin Panel - models - like - dislike
+Aya Ahmed ---> Home page - Category - Search - Pagination
+Ghada khamis ---> comment - reply - register - forbidden words
+Alaa Mamdouh --> subscribe - unsubscribe - login - like - dislike
 
