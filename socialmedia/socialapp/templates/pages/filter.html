@@ -93,8 +93,6 @@
 
       <div class='text-center'>
         <a href="/socialapp/{{category.id}}/cat_posts" class="w3-bar-item w3-button"> {{category.category_name}}</a>
-        <button  onclick="window.location.href='/socialapp/subscribe/{{category.id}}'" class="btn btn-primary"> Subscribe</button>
-
         <hr/>
       </div>
       {% endfor %}
@@ -102,7 +100,6 @@
     </div>
   </div>
 </div>
-
 <script src="{% static 'jquery.min.js' %}"></script>
     <script src="{% static 'bootstrap.bundle.min.js' %}"></script>
             <script src="{% static 'handler.js' %}"></script>
