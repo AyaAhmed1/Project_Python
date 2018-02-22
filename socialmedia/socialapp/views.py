@@ -165,7 +165,7 @@ def updatepst (request,pst_id):
 
         post_form=Postform(instance=post)
         if request.method=="POST":
-            post_form = Postform(request.POST, instance=post)
+            post_form = Postform(request.POST, request.FILES,instance=post)
             if post_form.is_valid():
                 post_form.save()
 
@@ -344,8 +344,10 @@ def Post_Page(request, post_id):
     replys = Reply.objects.order_by("-time_reply").all()
     replys = checkReply(words, replys)
     all_comments = check(words, all_comments)
+    userCountL = Like.objects.filter(user_id=request.user.id,post_id=post_id).count()
+    userCountD = Dislike.objects.filter(user_id=request.user.id,post_id=post_id).count()
     context = {"post_data": post, "all_categories": all_categories, "allcomments": all_comments, "allusers": all_users,
-               'all_replys': replys,"is_admin":request.user.is_superuser}
+               'all_replys': replys,"is_admin":request.user.is_superuser,'is_liked':userCountL,'is_disliked':userCountD}
     return render(request, "pages/post_page.html", context)
 
 
@@ -546,10 +548,22 @@ def add_like(request, post_id):
             if userCountD > 0:
                 D = Dislike.objects.get(user_id=request.user.id,post_id=post_id)
                 D.delete()
-                post1.countdislike = post1.countdislike - 1         
-            post1.save()
+                post1.countdislike = post1.countdislike - 1   
+        else:
+            L = Like.objects.get(user_id=request.user.id,post_id=post_id)
+            L.delete()
+            post1.countlike = post1.countlike - 1
+            if userCountD > 0:
+                D = Dislike.objects.get(user_id=request.user.id,post_id=post_id)
+                D.delete()
+                post1.countdislike = post1.countdislike - 1
 
-        data = {'success': True, 'count': post1.countlike, 'countD' : post1.countdislike
+        post1.save()
+        userCountL = Like.objects.filter(user_id=request.user.id,post_id=post_id).count()
+        userCountD = Dislike.objects.filter(user_id=request.user.id,post_id=post_id).count()
+
+
+        data = {'success': True, 'count': post1.countlike, 'countD' : post1.countdislike,'is_liked':userCountL,'is_disliked':userCountD
                 }
         return JsonResponse(data)
 
@@ -573,11 +587,28 @@ def add_dislike(request, post_id):
                 post1.save()
             if post1.countdislike == 10 :
                 post1.delete()
+        else:
+            D = Dislike.objects.get(user_id=request.user.id,post_id=post_id)
+            D.delete()
+            post1.countdislike = post1.countdislike - 1 
+            post1.save()
+
+
+            if userCountL > 0:
+                L = Like.objects.get(user_id=request.user.id,post_id=post_id)
+                L.delete()
+                post1.countlike = post1.countlike - 1
+                post1.save()
+            if post1.countdislike == 10 :
+                post1.delete()
+        userCountL = Like.objects.filter(user_id=request.user.id,post_id=post_id).count()
+        userCountD = Dislike.objects.filter(user_id=request.user.id,post_id=post_id).count()
+
 
             
         
 
-        data = {'success': True, 'count': post1.countdislike ,'countL' : post1.countlike
+        data = {'success': True, 'count': post1.countdislike ,'countL' : post1.countlike,'is_liked':userCountL,'is_disliked':userCountD
                 }
         return JsonResponse(data)
 

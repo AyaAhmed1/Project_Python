@@ -108,9 +108,19 @@
 
   {% if user.is_authenticated %}
       <div class="col-lg-8 pr-0 col-lg-offset-2">
+               {% if is_liked == 0%}
                <button type="button" class="btn btn-primary" id="add_like" post_id="{{post.id}}">like</button>
+               {% else %}
+               <button type="button" class="btn btn-info" id="add_like" post_id="{{post.id}}">unlike</button>
+               {% endif %}
                <label class="count_like">{{post.countlike}}</label>
+              {% if is_disliked == 0%}
+
                <button type="button" class="btn btn-primary" id="add_dislike" post_id="{{post.id}}">dislike</button>
+               {% else %}
+              <button type="button" class="btn btn-primary" id="add_dislike" post_id="{{post.id}}">undislike</button>
+               {% endif %}
+
                <label class="count_dislike">{{post.countdislike}}</label>
 
 
@@ -215,6 +225,37 @@
               if(data.success)
               {
                console.log(data.count)
+               if (data.is_liked == 0)
+               {
+                $('#add_like').removeClass("btn btn-info")
+
+                $('#add_like').addClass("btn btn-primary")
+                $('#add_like').html('like')
+               }
+               else
+               {
+                $('#add_like').removeClass("btn btn-primary")
+
+                $('#add_like').addClass("btn btn-info")
+                $('#add_like').html('unlike')
+
+               }
+                 if (data.is_disliked == 0)
+               {
+                $('#add_dislike').removeClass("btn btn-info")
+
+                $('#add_dislike').addClass("btn btn-primary")
+                $('#add_dislike').html('dislike')
+               }
+               else
+               {
+                $('#add_dislike').removeClass("btn btn-primary")
+
+                $('#add_dislike').addClass("btn btn-info")
+                $('#add_dislike').html('undislike')
+
+               }
+
                $('.count_like').html(data.count)
                $('.count_dislike').html(data.countD)
               }
@@ -231,6 +272,36 @@
             success:function(data){
               if(data.success)
               {
+                   if (data.is_disliked == 0)
+               {
+                $('#add_dislike').removeClass("btn btn-info")
+
+                $('#add_dislike').addClass("btn btn-primary")
+                $('#add_dislike').html('dislike')
+               }
+               else
+               {
+                $('#add_dislike').removeClass("btn btn-primary")
+
+                $('#add_dislike').addClass("btn btn-info")
+                $('#add_dislike').html('undislike')
+
+               }
+               if (data.is_liked == 0)
+               {
+                $('#add_like').removeClass("btn btn-info")
+
+                $('#add_like').addClass("btn btn-primary")
+                $('#add_like').html('like')
+               }
+               else
+               {
+                $('#add_like').removeClass("btn btn-primary")
+
+                $('#add_like').addClass("btn btn-info")
+                $('#add_like').html('unlike')
+
+               }
                console.log(data.count)
                if (data.count == 10)
                {
@@ -271,7 +342,6 @@
         }
       });
     </script>
-    <script src="{%static 'handler.js' %}"> </script>
 
 
  </body>
